@@ -14,6 +14,7 @@ vector<Player> sf;
 vector<Player> pf;
 vector<Player> c;
 int total;
+int highest;
 int prog;
 int prepercent = -1;
 float percent;
@@ -32,6 +33,7 @@ NBA_Analyzer::NBA_Analyzer(vector<Player>& pVec)
 	c = fillPos(pVec, "C");
 	total = totalCombination();
 	prog = 0;
+	highest = 0;
 	cout << pVec.size() << " players added: Ready to create optimal lineup." << endl;
 }
 
@@ -146,18 +148,18 @@ bool NBA_Analyzer::findSG(vector<Player*>& curList, vector<Player*>& bestList, i
 			continue;
 		cout << p->name << endl;
 		curList.push_back(p);
-		threadList.push_back(thread(&findSF, ref(curList), ref(bestList), salary - p->salary, ppg + p->ppg));
-		//findSF(curList, bestList, salary - p->salary, ppg + p->ppg);
+		//threadList.push_back(thread(&findSF, ref(curList), ref(bestList), salary - p->salary, ppg + p->ppg));
+		findSF(curList, bestList, salary - p->salary, ppg + p->ppg);
 		curList.pop_back();
 	}
-	for (vector<thread>::iterator it = threadList.begin(); it != threadList.end(); ++it){
+	/*for (vector<thread>::iterator it = threadList.begin(); it != threadList.end(); ++it){
 		if ((*it).joinable()){
 			(*it).join();
 		}
 		else{
 			(*it).detach();
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -259,9 +261,12 @@ bool NBA_Analyzer::findUtil(vector<Player*>& curList, vector<Player*>& bestList,
 		if (p->salary > salary || contains(p, curList)) // check to see if pg already in curList
 			continue;
 		curList.push_back(p);
-		if (ppg + p->ppg > scoreList(bestList))
+		if (ppg + p->ppg > highest){
 			makeBest(curList, bestList);
+			highest = ppg + p->ppg;
+		}
 		curList.pop_back();
+		break;
 	}
 	for (vector<Player>::iterator it = sg.begin(); it != sg.end(); ++it){
 		prog++;
@@ -269,9 +274,12 @@ bool NBA_Analyzer::findUtil(vector<Player*>& curList, vector<Player*>& bestList,
 		if (p->salary > salary || contains(p, curList))	// check to see if sg already in curList
 			continue;
 		curList.push_back(p);
-		if (ppg + p->ppg > scoreList(bestList))
+		if (ppg + p->ppg > highest){
 			makeBest(curList, bestList);
+			highest = ppg + p->ppg;
+		}
 		curList.pop_back();
+		break;
 	}
 	for (vector<Player>::iterator it = sf.begin(); it != sf.end(); ++it){
 		prog++;
@@ -279,9 +287,12 @@ bool NBA_Analyzer::findUtil(vector<Player*>& curList, vector<Player*>& bestList,
 		if (p->salary > salary || contains(p, curList))	// check to see if sf already in curList
 			continue;
 		curList.push_back(p);
-		if (ppg + p->ppg > scoreList(bestList))
+		if (ppg + p->ppg > highest){
 			makeBest(curList, bestList);
+			highest = ppg + p->ppg;
+		}
 		curList.pop_back();
+		break;
 	}
 	for (vector<Player>::iterator it = pf.begin(); it != pf.end(); ++it){
 		prog++;
@@ -289,9 +300,12 @@ bool NBA_Analyzer::findUtil(vector<Player*>& curList, vector<Player*>& bestList,
 		if (p->salary > salary || contains(p, curList))	// check to see if pf already in curList
 			continue;
 		curList.push_back(p);
-		if (ppg + p->ppg > scoreList(bestList))
+		if (ppg + p->ppg > highest){
 			makeBest(curList, bestList);
+			highest = ppg + p->ppg;
+		}
 		curList.pop_back();
+		break;
 	}
 	for (vector<Player>::iterator it = c.begin(); it != c.end(); ++it){
 		prog++;
@@ -299,9 +313,12 @@ bool NBA_Analyzer::findUtil(vector<Player*>& curList, vector<Player*>& bestList,
 		if (p->salary > salary || contains(p, curList)) // check to see if c already in curList
 			continue;
 		curList.push_back(p);
-		if (ppg + p->ppg > scoreList(bestList))
+		if (ppg + p->ppg > highest){
 			makeBest(curList, bestList);
+			highest = ppg + p->ppg;
+		}
 		curList.pop_back();
+		break;
 	}
 	//cout << "Current progress: " << int(percent * 100) << " %\r";
 	//cout << '\r' << "Current progress: " << prog << "/" << total;

@@ -1,5 +1,6 @@
 #include "FileReader.h"
 #include "NBA_Analyzer.h"
+#include "NFL_Analyzer.h"
 #include "Player.h"
 #include <cstdlib>   // for exit(0)
 #include <iostream>
@@ -27,6 +28,7 @@ void threadFunc();
 
 vector<Player> pVec;
 NBA_Analyzer opt;
+NFL_Analyzer nfl_opt;
 
 int main(){
 	map<string, cmd_t> cmd_map;
@@ -112,13 +114,16 @@ void bye(istringstream& iss)
 
 void load_lineup(istringstream& iss)
 {
-	string name, tmp;
-	if (!(iss >> name) || (iss >> tmp))
+	string type, name, tmp;
+	if (!(iss >> type) || !(iss >> name) || (iss >> tmp))
 		throw runtime_error("Syntax: load [filename]");
 	FileReader fr(name);
 	pVec = fr.read();
 	
-	opt = NBA_Analyzer(pVec);
+	if (type.compare("nba") == 0)
+		opt = NBA_Analyzer(pVec);
+	else
+		nfl_opt = NFL_Analyzer(pVec);			// NOT YET IMPLEMENTED
 }
 
 void print_cmd(istringstream& iss)
