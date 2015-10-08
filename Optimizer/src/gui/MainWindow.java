@@ -1,8 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,7 +16,10 @@ import listeners.SportListener;
 public class MainWindow implements Runnable {
 
 	private JFrame _title;
+	private int _sport;
 
+	
+	//Creates the JFrame and adds buttons to select what sport you want to run the algorithm on.
 	public void run() {
 		_title = new JFrame("Lineup Optimizer 2015");
 		_title.setSize(1000,800);
@@ -33,12 +38,22 @@ public class MainWindow implements Runnable {
 		label2.setForeground(Color.BLUE);
 		panel.add(label2);	
 		JPanel bp1 = new JPanel();
+		JPanel bp2 = new JPanel();
 		panel.add(bp1);
-		JButton b1 = new JButton("________  Ball");
+		panel.add(bp2);
+		JButton b1 = new JButton("Basketball");
+		JButton b2 = new JButton("Football");
 		bp1.add(b1);
+		bp2.add(b2);
 		b1.addActionListener(new SportListener(this, 1));
+		b2.addActionListener(new SportListener(this, 2));
 	}
 	
+	public void setSport(int i){	//I'm not sure if we need to select different sports but this could be a way of keeping track if need be
+		_sport = i;
+	}
+	
+	//Window with a button that opens the file browser.
 	public void fileBrowser(){
 		_title.getContentPane().removeAll();
 		JPanel panel = new JPanel();
@@ -55,6 +70,7 @@ public class MainWindow implements Runnable {
 		_title.getContentPane().repaint();
 	}
 
+	//This is where the algorithm will be executed.
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
 		JPanel panel = new JPanel();
@@ -64,7 +80,18 @@ public class MainWindow implements Runnable {
 		JLabel l2 = new JLabel("Just kidding, it's not implemented yet");
 		panel.add(l1);
 		panel.add(l2);
+		
+		if(_sport == 1){
+			//execute Basketball Algorithm
+		}
+		
+		if(_sport == 2){
+			//execute Football Algorithm
+		}
+		
+		_title.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		_title.getContentPane().revalidate();
 		_title.getContentPane().repaint();
+		
 	}
 }

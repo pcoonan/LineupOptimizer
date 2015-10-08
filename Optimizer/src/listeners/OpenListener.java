@@ -16,18 +16,19 @@ public class OpenListener implements ActionListener {
 		_mw = mw;
 	}
 	
+	
+// This will open a file chooser that will only accept CSV files. 
+// When one is selected then the file path will be passed back into the main window.
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    JFileChooser chooser = new JFileChooser();
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "CSV Files", "csv");
-	    chooser.setFileFilter(filter);
-	    int returnVal = chooser.showOpenDialog(chooser);
-	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-	       System.out.println("You chose to open this file: " +
-	            chooser.getSelectedFile().getPath());
-	       		_mw.startAlgo(chooser.getSelectedFile().getPath());
-	    }
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(chooser);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getPath());
+			_mw.startAlgo(chooser.getSelectedFile().getPath());
+		}
 
 	}
 
