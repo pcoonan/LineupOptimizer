@@ -59,4 +59,8 @@ public class Player {
 		sal = isal;
 		value = ippg/isal;			// Working idea for the algo
 	}
+	
+	public String toString(){
+		return name + " " + pos + " " + sal + " " + ppg;
+	}
 }
