@@ -26,6 +26,28 @@ public class Utils {
 	private static double salary = 50000;
 	
 	public static void main(String[] args) {
+//		ArrayList<Player> players = new ArrayList<Player>();
+//		try {
+//			BufferedReader in = new BufferedReader(new FileReader(new File("CSV\\DraftKings\\NFLDKSalaries.csv")));
+//			String line = in.readLine();
+//			line = in.readLine();
+//			while(line != null){
+//				String[] tuple = line.split(",");
+//				String pos = tuple[0].substring(1, tuple[0].length()-1);
+//				String name = tuple[1].substring(1, tuple[1].length()-1);;
+//				double sal = Double.parseDouble(tuple[2]);
+//				double ppg = Double.parseDouble(tuple[4]);
+//				players.add(new Player(name, pos, ppg, sal));
+//				line = in.readLine();
+//			}
+//			in.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		createLineup(readCSV("CSV\\DraftKings\\NFLDKSalaries.csv"));
+	}
+	
+	public static ArrayList<Player> readCSV(String file){
 		ArrayList<Player> players = new ArrayList<Player>();
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(new File("CSV\\DraftKings\\NFLDKSalaries.csv")));
@@ -44,9 +66,8 @@ public class Utils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		createLineup(players);
+		return players;
 	}
-	
 	/**
 	 * Algo Idea:
 	 * 
