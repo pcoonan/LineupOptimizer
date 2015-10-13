@@ -44,11 +44,22 @@ public class Utils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		printPlayer(players.get(0));
 		createLineup(players);
 	}
 	
-	public static void createLineup(ArrayList<Player> players) {
+	/**
+	 * Algo Idea:
+	 * 
+	 * Creates a lineup given an unsorted list of players. Calls a merge sort on this 
+	 * list, ordering from players of highest to lowest "value". Runs through this list 
+	 * filling positions as available and if salary permits. If run does not output a
+	 * complete lineup, the latest player is removed and added to a forbidden list. The
+	 * algo is run again until either a full lineup is created or no players can be added
+	 * because of the forbidden list. The forbidden list is then cleared and the latest player
+	 * is removed.
+	 */
+	
+	public static ArrayList<Player> createLineup(ArrayList<Player> players) {
 		sort(players);
 		
 		boolean newIt = false;
@@ -61,6 +72,7 @@ public class Utils {
 				System.out.println(temp.name);
 				forbidden.put(temp, true);
 				salary += temp.sal;
+				remove(temp);
 				newIt = false;
 				System.out.println(salary);
 			}
@@ -75,12 +87,48 @@ public class Utils {
 				Player temp = lineup.pop();
 				forbidden.put(temp, true);
 				salary += temp.sal;
+				remove(temp);
 				newIt = true;
 			}
 		}
-		System.out.println(lineupCreated());
-		printLineup();
+		return printLineup();
 	}
+	
+	/**
+	 * Removes a player from our temporary lineup.
+	 * 
+	 * @param temp - player to remove
+	 */
+	
+	private static void remove(Player temp) {
+		if(temp.equals(qb))
+			qb = null;
+		else if(temp.equals(rb1))
+			rb1 = null;
+		else if(temp.equals(rb2))
+			rb2 = null;
+		else if(temp.equals(wr1))
+			wr1 = null;
+		else if(temp.equals(wr2))
+			wr2 = null;
+		else if(temp.equals(wr3))
+			wr3 = null;
+		else if(temp.equals(te))
+			te = null;
+		else if(temp.equals(flex))
+			flex = null;
+		else if(temp.equals(dst))
+			dst = null;
+	}
+
+	/**
+	 * Given the list of players and the current index to look at, this checks to
+	 * see if the player at the index can be added based on salary and position
+	 * availability.
+	 * 
+	 * @param players - list of players
+	 * @param i - current index
+	 */
 	
 	private static void findNextPlayer(ArrayList<Player> players, int i) {
 		if(i >= players.size()){
@@ -89,8 +137,6 @@ public class Utils {
 		if(forbidden.get(players.get(i)) == true){
 			findNextPlayer(players, i+1);
 		}
-		Player p = players.get(i);
-		String pos = p.pos;
 		if(players.get(i).sal < salary){	// Can add player
 			if(players.get(i).pos.compareTo("QB") == 0){
 				if(qb == null){
@@ -185,19 +231,33 @@ public class Utils {
 			}
 		}
 		else{ // Can't add player
-//			System.out.println("Too large a salary");
 			findNextPlayer(players, i+1);
 		}
 	}
 
-	public static void printPlayer(Player p){
+	/**
+	 * Prints the given players info to the console/returns the player. 
+	 * 
+	 * @param p - player to be printed.
+	 * @return - given player, can be used for adding to output list
+	 */
+	
+	public static Player printPlayer(Player p){
 		if(p == null){
 			System.out.println("null");
 		}
 		else{
 			System.out.println(p.name + " " + p.pos + " " + p.sal + " " + p.ppg);
 		}
+		return p;
 	}
+	
+	/**
+	 * A merge sort based on player value.
+	 * 
+	 * @param list - unsorted list of players
+	 */
+	
 	private static void sort(ArrayList<Player> list) { // Pretty straightforward merge sort
 		if (list.size() > 1) {
 			int half = list.size() / 2;
@@ -246,11 +306,22 @@ public class Utils {
 	public ArrayList<Player> projectionScore(ArrayList<Player> players, String[][] projections) {
 		return null;
 	}
+	
+	/**
+	 * Returns if the lineup has been created.
+	 * @return - boolean value of if there is a lineup created
+	 */
+	
 	private static boolean lineupCreated(){
 		return qb != null && rb1 != null && rb2 != null && wr1 != null
 				&& wr2 != null && wr3 != null && te != null && flex != null
 				&& dst != null;
 	}
+	
+	/**
+	 * Prints out the projected score of a given lineup.
+	 */
+	
 	private static void scoreLineup() {
 		double points = 0;
 		if(qb != null){
@@ -282,16 +353,23 @@ public class Utils {
 		}
 		System.out.println(points);
 	}
-	private static void printLineup() {
-		printPlayer(qb);
-		printPlayer(rb1);
-		printPlayer(rb2);
-		printPlayer(wr1);
-		printPlayer(wr2);
-		printPlayer(wr3);
-		printPlayer(te);
-		printPlayer(flex);
-		printPlayer(dst);
+	/**
+	 * Prints out the lineup and returns an ArrayList of the lineup.
+	 * @return - ArrayList of the lineup
+	 */
+	
+	private static ArrayList<Player> printLineup() {
+		ArrayList<Player> out = new ArrayList<Player>();
+		out.add(printPlayer(qb));
+		out.add(printPlayer(rb1));
+		out.add(printPlayer(rb2));
+		out.add(printPlayer(wr1));
+		out.add(printPlayer(wr2));
+		out.add(printPlayer(wr3));
+		out.add(printPlayer(te));
+		out.add(printPlayer(flex));
+		out.add(printPlayer(dst));
 		scoreLineup();
+		return out;
 	}
 }
