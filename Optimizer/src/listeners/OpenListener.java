@@ -34,7 +34,7 @@ public class OpenListener implements ActionListener {
 		int returnVal = chooser.showOpenDialog(chooser);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getPath());
-			_mw.startAlgo(chooser.getSelectedFile().getPath());
+			_mw.startAlgo(chooser.getSelectedFile().getAbsolutePath());
 		}
 
 	}

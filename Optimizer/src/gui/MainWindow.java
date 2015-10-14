@@ -3,6 +3,7 @@ package gui;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.Border;
 
+import code.Parser;
+import code.Player;
+import code.Utils;
 import listeners.OpenListener;
 import listeners.RestartListener;
 import listeners.SportListener;
@@ -61,6 +65,7 @@ public class MainWindow implements Runnable {
 	//sets window to the initial choose sport menu
 	public void chooseSport(){
 		_title.getContentPane().removeAll();
+		_title.setSize(700,400);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 1));
 		_title.add(panel);
@@ -103,50 +108,65 @@ public class MainWindow implements Runnable {
 	}
 
 	//This is where the algorithm will be executed.
+//	public void startAlgo(String file){
+//		_title.getContentPane().removeAll();
+//		JPanel panel = new JPanel();
+//		_title.add(panel);
+//		panel.setLayout(new GridLayout(0,1));
+//		JLabel l1 = new JLabel("You are running the algorithm on " + file + " Please wait...");
+//		JLabel l2 = new JLabel("Just kidding, it's not implemented yet");
+//		panel.add(l1);
+//		panel.add(l2);
+//		
+//		if(_sport == 1){
+//			//execute Basketball Algorithm
+//		}
+//		
+//		if(_sport == 2){
+//			//execute Football Algorithm
+//		}
+//		
+//
+//		//Make a progress bar
+//		JPanel jp = new JPanel();
+//		JProgressBar progressBar = new JProgressBar();
+//		progressBar.setValue(0);
+//		progressBar.setStringPainted(true);
+//	    Border border = BorderFactory.createTitledBorder("Processing...");
+//	    progressBar.setBorder(border);
+//	    jp.add(progressBar);
+//	    panel.add(jp);
+//	
+//	    
+//	    //Ticks the progress bar up every .25 seconds (just a test)
+//	    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+//	    executor.scheduleAtFixedRate(new PBarTest(progressBar), 0, 250, TimeUnit.MILLISECONDS);
+//
+//	    
+//	    //Set cursor to a waiting cursor
+//		_title.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//		
+//		//Disable the menu items
+//		_restart.setEnabled(false);
+//		_scraper.setEnabled(false);
+//		
+//		_title.getContentPane().revalidate();
+//		_title.getContentPane().repaint();
+//		
+//	}
+	
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
+		_title.setSize(700,700);
+		ArrayList<Player> list = Utils.createLineup(Utils.readCSV(file));
 		JPanel panel = new JPanel();
 		_title.add(panel);
 		panel.setLayout(new GridLayout(0,1));
-		JLabel l1 = new JLabel("You are running the algorithm on " + file + " Please wait...");
-		JLabel l2 = new JLabel("Just kidding, it's not implemented yet");
-		panel.add(l1);
-		panel.add(l2);
-		
-		if(_sport == 1){
-			//execute Basketball Algorithm
+		for(Player p: list){
+			JLabel jl = new JLabel(p.toString());
+			panel.add(jl);
 		}
-		
-		if(_sport == 2){
-			//execute Football Algorithm
-		}
-		
-
-		//Make a progress bar
-		JPanel jp = new JPanel();
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(0);
-		progressBar.setStringPainted(true);
-	    Border border = BorderFactory.createTitledBorder("Processing...");
-	    progressBar.setBorder(border);
-	    jp.add(progressBar);
-	    panel.add(jp);
-	
-	    
-	    //Ticks the progress bar up every .25 seconds (just a test)
-	    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-	    executor.scheduleAtFixedRate(new PBarTest(progressBar), 0, 250, TimeUnit.MILLISECONDS);
-
-	    
-	    //Set cursor to a waiting cursor
-		_title.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		
-		//Disable the menu items
-		_restart.setEnabled(false);
-		_scraper.setEnabled(false);
-		
 		_title.getContentPane().revalidate();
 		_title.getContentPane().repaint();
-		
 	}
 }
