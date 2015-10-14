@@ -1,14 +1,14 @@
 package gui;
 
-import java.awt.Cursor;
+//import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.ScheduledExecutorService;
+//import java.util.concurrent.TimeUnit;
 
-import javax.swing.BorderFactory;
+//import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,10 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.border.Border;
+//import javax.swing.JProgressBar;
+//import javax.swing.border.Border;
 
-import code.Parser;
+//import code.Parser;
 import code.Player;
 import code.Utils;
 import listeners.OpenListener;
@@ -161,10 +161,28 @@ public class MainWindow implements Runnable {
 		ArrayList<Player> list = Utils.createLineup(Utils.readCSV(file));
 		JPanel panel = new JPanel();
 		_title.add(panel);
-		panel.setLayout(new GridLayout(0,1));
+		panel.setLayout(new GridLayout(0,4));
+		JLabel j1 = new JLabel("Name:");
+		JLabel j2 = new JLabel("Position:");
+		JLabel j3 = new JLabel("Salary:");
+		JLabel j4 = new JLabel("Points per game:");
+		j1.setFont(new Font("Default", Font.PLAIN, 20));
+		j2.setFont(new Font("Default", Font.PLAIN, 20));
+		j3.setFont(new Font("Default", Font.PLAIN, 20));
+		j4.setFont(new Font("Default", Font.PLAIN, 20));
+		panel.add(j1);
+		panel.add(j2);
+		panel.add(j3);
+		panel.add(j4);
 		for(Player p: list){
-			JLabel jl = new JLabel(p.toString());
-			panel.add(jl);
+			JLabel jl1 = new JLabel(p.name);
+			JLabel jl3 = new JLabel(""+p.sal);
+			JLabel jl2 = new JLabel(p.pos);
+			JLabel jl4 = new JLabel(p.ppg+"");
+			panel.add(jl1);
+			panel.add(jl2);
+			panel.add(jl3);
+			panel.add(jl4);
 		}
 		_title.getContentPane().revalidate();
 		_title.getContentPane().repaint();
