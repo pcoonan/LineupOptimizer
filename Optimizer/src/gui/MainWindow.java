@@ -99,7 +99,7 @@ public class MainWindow implements Runnable {
 		bp1.setBackground(Color.decode("#efefe3")); //Dark Cream
 		bp2.setBackground(Color.decode("#efefe3")); 
 		bp1.setBorder(BorderFactory.createLineBorder(Color.decode("#e2e1cb"))); //Medium Cream
-		bp2.setBorder(BorderFactory.createLineBorder(Color.decode("#e2e1cb"))); //Medium Cream
+		bp2.setBorder(BorderFactory.createLineBorder(Color.decode("#e2e1cb")));
 		panel2.add(bp1);
 		panel2.add(bp2);
 		
@@ -233,8 +233,8 @@ public class MainWindow implements Runnable {
 			count++;
 			JLabel jl1 = new JLabel("  " + p.name);
 			JLabel jl2;
-			if (count == 5){
-				jl2 = new JLabel("  FLEX"); //TODD find out if FLEX is always in this position or not
+			if (count == 7){  //TODO un-hard-code this when projection update is implemented
+				jl2 = new JLabel("  FLEX"); 
 			}
 			else {
 				jl2 = new JLabel("  " + p.pos);
