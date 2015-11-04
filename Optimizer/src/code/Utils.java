@@ -24,6 +24,7 @@ public class Utils {
 	private static Stack<Player> lineup = new Stack<Player>();
 	private static HashMap<Player, Boolean> forbidden = new HashMap<Player, Boolean>();
 	private static double salary = 50000;
+    private static double points = 0;
 	
 	public static void main(String[] args) {
 //		ArrayList<Player> players = new ArrayList<Player>();
@@ -50,7 +51,13 @@ public class Utils {
 	public static ArrayList<Player> readCSV(String file){
 		ArrayList<Player> players = new ArrayList<Player>();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(new File("CSV\\DraftKings\\NFLDKSalaries.csv")));
+			BufferedReader in;
+	    	if(System.getProperty("os.name").equals("Mac OS X")){
+	    		in = new BufferedReader(new FileReader(new File("CSV/DraftKings/NFLDKSalaries.csv")));
+	    	}
+	    	else {
+	    		in = new BufferedReader(new FileReader(new File("CSV\\DraftKings\\NFLDKSalaries.csv")));
+	    	}
 			String line = in.readLine();
 			line = in.readLine();
 			while(line != null){
@@ -344,7 +351,6 @@ public class Utils {
 	 */
 	
 	private static void scoreLineup() {
-		double points = 0;
 		if(qb != null){
 			points += qb.ppg;
 		}
@@ -392,5 +398,21 @@ public class Utils {
 		out.add(printPlayer(dst));
 		scoreLineup();
 		return out;
+	}
+	
+	/**
+	 * Returns the current value of points.
+	 * @return - value of double points
+	 */
+	public static double getPoints(){
+		return points;
+	}
+	
+	/**
+	 * Returns the current value of salary.
+	 * @return - value of double salary
+	 */
+	public static double getSalary(){
+		return salary;
 	}
 }
