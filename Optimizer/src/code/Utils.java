@@ -34,12 +34,12 @@ public class Utils {
 		
 //		toFile(players);
 //		createLineup(players);
-		for(Player p: players){
-			p.setPPG(0.0);
-		}
-		projectionScore(players);
-		players.sort(new PlayerComparator());
-		createLineup(players);
+//		for(Player p: players){
+//			p.setPPG(0.0);
+//		}
+//		projectionScore(players);
+//		players.sort(new PlayerComparator());
+		createLineup(players).printLineup();
 	}
 	
 	public static ArrayList<Player> readCSV(String file){

@@ -179,7 +179,7 @@ public class NFLLineup implements Lineup {
 			System.out.println("null");
 		}
 		else{
-			System.out.println(p.getName() + " " + p.getPosition() + " " + p.getSalary() + " " + p.getPPG());
+			System.out.println(p.getName() + " " + p.getPosition() + " " + p.getSalary() + " " + p.getProjection());
 		}
 		return p;
 	}
