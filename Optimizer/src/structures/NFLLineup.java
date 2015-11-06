@@ -301,6 +301,99 @@ public class NFLLineup implements Lineup {
 		}
 		else System.out.println("No better options");
 	}
+	@Override
+	public boolean forceAdd(Player p) {
+		if(contains(p)) return false;
+		if(p instanceof QB){
+			if(qb == null){
+				qb = (QB) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+		}
+		else if(p instanceof RB){
+			if(rb1 == null){
+				rb1 = (RB) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(rb2 == null){
+				rb2 = (RB) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(flex == null){
+				flex = p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+		}
+		else if(p instanceof WR){
+			if(wr1 == null){
+				wr1 = (WR) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(wr2 == null){
+				wr2 = (WR) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(wr3 == null){
+				wr3 = (WR) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(flex == null){
+				flex = p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+		}
+		else if(p instanceof TE){
+			if(te == null){
+				te = (TE) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+			else if(flex == null){
+				flex = p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+		}
+		else if(p instanceof DST){
+			if(dst == null){
+				dst = (DST) p;
+				salary -= p.getSalary();
+				score += p.getPPG();
+				projscore += p.getProjection();
+				return true;
+			}
+		}
+		return false;
+	
+	}
 	
 	
 }

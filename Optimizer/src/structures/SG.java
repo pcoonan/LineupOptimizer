@@ -1,19 +1,17 @@
 package structures;
 
-public class TE implements Player {
+public class SG implements Player {
 
-	private double ppg;
 	private String name;
 	private String pos;
+	private double ppg;
 	private double sal;
-	private double projection;
-
-	public TE(String name, String pos, double ppg, double sal) {
+	
+	public SG(String name, String pos, double ppg, double sal) {
 		this.name = name;
 		this.pos = pos;
 		this.ppg = ppg;
 		this.sal = sal;
-		this.projection = 0;
 	}
 
 	@Override
@@ -25,49 +23,51 @@ public class TE implements Player {
 //		if(this.getSalary() < arg0.getSalary()) return AFTER;
 //		if(this.getSalary() > arg0.getSalary()) return BEFORE;
 		
-		if(this.getProjection()/this.getSalary() > arg0.getProjection()/arg0.getSalary()) return AFTER;
-		if(this.getProjection()/this.getSalary() < arg0.getProjection()/arg0.getSalary()) return BEFORE;
+		if(this.getPPG()/this.getSalary() > arg0.getPPG()/arg0.getSalary()) return AFTER;
+		if(this.getPPG()/this.getSalary() < arg0.getPPG()/arg0.getSalary()) return BEFORE;
 		return EQUAL;
 	}
 
-	@Override
 	public double getSalary() {
 		return sal;
 	}
 
-	@Override
 	public void setSalary(double sal) {
 		this.sal = sal;
 	}
 
-	@Override
 	public String getPosition() {
 		return pos;
 	}
 
-	@Override
 	public void setPosition(String pos) {
 		this.pos = pos;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
 	public double getPPG() {
 		return ppg;
 	}
 
-	@Override
 	public void setPPG(double ppg) {
 		this.ppg = ppg;
+	}
+
+	@Override
+	public void setProjection(double ppg) {
+		this.ppg = ppg;
+	}
+
+	@Override
+	public double getProjection() {
+		return this.ppg;
 	}
 
 	@Override
@@ -90,9 +90,9 @@ public class TE implements Player {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof TE))
+		if (!(obj instanceof SG))
 			return false;
-		TE other = (TE) obj;
+		SG other = (SG) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -110,13 +110,4 @@ public class TE implements Player {
 		return true;
 	}
 
-	@Override
-	public void setProjection(double ppg) {
-		this.projection = ppg;
-	}
-
-	@Override
-	public double getProjection() {
-		return this.projection;
-	}
 }

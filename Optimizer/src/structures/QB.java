@@ -26,8 +26,11 @@ public class QB implements Player{
 		final int AFTER = 1;
 		final int EQUAL = 0;
 		
-		if(this.getSalary() < arg0.getSalary()) return AFTER;
-		if(this.getSalary() > arg0.getSalary()) return BEFORE;
+//		if(this.getSalary() < arg0.getSalary()) return AFTER;
+//		if(this.getSalary() > arg0.getSalary()) return BEFORE;
+		
+		if(this.getProjection()/this.getSalary() > arg0.getProjection()/arg0.getSalary()) return AFTER;
+		if(this.getProjection()/this.getSalary() < arg0.getProjection()/arg0.getSalary()) return BEFORE;
 		return EQUAL;
 	}
 

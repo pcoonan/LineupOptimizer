@@ -10,12 +10,18 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import structures.C;
 import structures.DST;
 import structures.Lineup;
+import structures.NBALineup;
 import structures.NFLLineup;
+import structures.PF;
+import structures.PG;
 import structures.Player;
 import structures.QB;
 import structures.RB;
+import structures.SF;
+import structures.SG;
 import structures.TE;
 import structures.WR;
 
@@ -30,7 +36,7 @@ public class Utils {
 	public static void main(String[] args) {
 		// This is for testing on Patrick's computer - should not be executed as part of the program,
 		// hence the local file path.
-		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek9.csv");//"CSV\\DraftKings\\NFLDKSalaries.csv");
+		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek9SM.csv");//"CSV\\DraftKings\\NFLDKSalaries.csv");
 		
 //		toFile(players);
 //		createLineup(players);
@@ -39,7 +45,10 @@ public class Utils {
 //		}
 //		projectionScore(players);
 //		players.sort(new PlayerComparator());
-		createLineup(players).printLineup();
+//		System.out.println(createLineup(players, "NBA").getScore());
+		Lineup l = alternativeLineup(players, "NFL");
+		l.printLineup();
+		System.out.println(l.getScore());
 	}
 	
 	public static ArrayList<Player> readCSV(String file){
@@ -70,6 +79,21 @@ public class Utils {
 				case "DST":
 					players.add(new DST(name, pos, ppg, sal));
 					break;
+				case "PG":
+					players.add(new PG(name, pos, ppg, sal));
+					break;
+				case "SG":
+					players.add(new SG(name, pos, ppg, sal));
+					break;
+				case "SF":
+					players.add(new SF(name, pos, ppg, sal));
+					break;
+				case "PF":
+					players.add(new PF(name, pos, ppg, sal));
+					break;
+				case "C":
+					players.add(new C(name, pos, ppg, sal));
+					break;
 				}
 				line = in.readLine();
 			}
@@ -89,12 +113,20 @@ public class Utils {
 	 * until a valid lineup is created.
 	 */
 	
-	public static Lineup createLineup(ArrayList<Player> players) {
-		projectionScore(players);
+	public static Lineup createLineup(ArrayList<Player> players, String sport) {
+		Lineup lineup = null;
+		switch(sport){
+		case "NFL":
+			projectionScore(players);
+			lineup = new NFLLineup(players);
+			break;
+		case "NBA":
+			lineup = new NBALineup();
+		}
 		players.sort(new PlayerComparator());
-		NFLLineup lineup = new NFLLineup(players);
 		for(Player p : players){
 			forbidden.put(p, false);
+			if(p.getName().equals("Thabo Sefolosha") || p.getName().equals("Andrew Bogut")) forbidden.put(p, true);
 		}
 		while(!lineup.lineupCreated()){
 			for(Player p: players){
@@ -114,6 +146,43 @@ public class Utils {
 		return lineup;
 	}
 	
+	public static Lineup alternativeLineup(ArrayList<Player> players, String sport){
+		Player kill = null;
+		for(Player p : players){
+			if(p.getName().equals("Andrew Bogut")){
+				kill = p;
+			}
+		}
+		if(kill != null) players.remove(kill);
+		Lineup lineup = null;
+		switch(sport){
+		case "NFL":
+			projectionScore(players);
+			lineup = new NFLLineup(players);
+			break;
+		case "NBA":
+			lineup = new NBALineup();
+		}
+		Queue<Player> order = new PriorityQueue<Player>();
+		players.sort(new PlayerComparator());
+		
+		int balance = -1;
+		while (balance < 0) {
+			for (Player p : players){
+				if(lineup.forceAdd(p))
+					order.add(p);
+			}
+			balance = lineup.getSalary();
+			if(balance < 0){
+				Player temp = order.remove();
+				lineup.removePlayer(temp);
+				players.remove(temp);
+			}
+		}
+		lineup.checkBetter(players);
+		lineup.checkBetter(players);
+		return lineup;
+	}
 	@SuppressWarnings("unused")
 	private static void toFile(ArrayList<Player> players) {
 		try{

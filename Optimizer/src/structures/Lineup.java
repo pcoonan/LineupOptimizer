@@ -14,4 +14,5 @@ public interface Lineup {
 	boolean contains(Player player);
 	double getProjection();
 	void checkBetter(ArrayList<Player> players);
+	boolean forceAdd(Player p);
 }

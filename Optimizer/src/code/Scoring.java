@@ -53,7 +53,7 @@ public class Scoring {
 					// System.out.print(k + ": ");
 					if (projections[i][k] != null) { // Signifies the end of the
 														// attributes
-						System.out.println(projections[i][k] + " ");
+//						System.out.println(projections[i][k] + " ");
 						if (rules.containsKey((Integer) k)) {
 							score += Double.parseDouble(projections[i][k]) * rules.get(k);
 						}
