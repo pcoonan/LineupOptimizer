@@ -110,6 +110,7 @@ public class Utils {
 				lineup.removePlayer(temp);
 			}
 		}
+		lineup.checkBetter(players);
 		return lineup;
 	}
 	

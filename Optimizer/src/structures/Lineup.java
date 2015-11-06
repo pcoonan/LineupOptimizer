@@ -12,4 +12,6 @@ public interface Lineup {
 	Player printPlayer(Player p);
 	boolean lineupCreated();
 	boolean contains(Player player);
+	double getProjection();
+	void checkBetter(ArrayList<Player> players);
 }

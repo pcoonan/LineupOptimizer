@@ -15,6 +15,7 @@ public class NFLLineup implements Lineup {
 	private static DST dst = null;
 	private static int salary = 50000;
 	private static double score = 0;
+	private static double projscore = 0;
 	private static boolean projected = false;
 	
 	public NFLLineup(ArrayList<Player> players) {
@@ -33,6 +34,7 @@ public class NFLLineup implements Lineup {
 				qb = (QB) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else{
@@ -44,18 +46,21 @@ public class NFLLineup implements Lineup {
 				rb1 = (RB) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(rb2 == null){
 				rb2 = (RB) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(flex == null){
 				flex = p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else{
@@ -67,24 +72,28 @@ public class NFLLineup implements Lineup {
 				wr1 = (WR) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(wr2 == null){
 				wr2 = (WR) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(wr3 == null){
 				wr3 = (WR) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(flex == null){
 				flex = p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else{
@@ -96,12 +105,14 @@ public class NFLLineup implements Lineup {
 				te = (TE) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else if(flex == null){
 				flex = p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else{
@@ -113,6 +124,7 @@ public class NFLLineup implements Lineup {
 				dst = (DST) p;
 				salary -= p.getSalary();
 				score += p.getPPG();
+				projscore += p.getProjection();
 				return true;
 			}
 			else{
@@ -143,6 +155,7 @@ public class NFLLineup implements Lineup {
 			dst = null;
 		salary += p.getSalary();
 		score -= p.getPPG();
+		projscore -= p.getProjection();
 	}
 	
 	@Override
@@ -204,6 +217,89 @@ public class NFLLineup implements Lineup {
 		else if(player.equals(dst))
 			return true;
 		return false;
+	}
+	@Override
+	public double getProjection() {
+		return projscore;
+	}
+	@Override
+	public void checkBetter(ArrayList<Player> players) {
+		Player better = null;
+		Player worse = null;
+		double points = 0;
+		for(Player p: players){
+			if(contains(p)) continue;
+			if(p instanceof QB){
+				if(p.getProjection() - qb.getProjection() > points && (p.getSalary() - qb.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = qb;
+					points = p.getProjection() - qb.getProjection();
+				}
+			}
+			else if(p instanceof RB){
+				if(p.getProjection() - rb1.getProjection() > points && (p.getSalary() - rb1.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = rb1;
+					points = p.getProjection() - rb1.getProjection();
+				}
+				else if(p.getProjection() - rb2.getProjection() > points && (p.getSalary() - rb2.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = rb2;
+					points = p.getProjection() - rb2.getProjection();
+				}
+				else if(p.getProjection() - flex.getProjection() > points && (p.getSalary() - flex.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = flex;
+					points = p.getProjection() - flex.getProjection();
+				}
+			}
+			else if(p instanceof WR){
+				if(p.getProjection() - wr1.getProjection() > points && (p.getSalary() - wr1.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = wr1;
+					points = p.getProjection() - wr1.getProjection();
+				}
+				else if(p.getProjection() - wr2.getProjection() > points && (p.getSalary() - wr2.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = wr2;
+					points = p.getProjection() - wr2.getProjection();
+				}
+				else if(p.getProjection() - wr3.getProjection() > points && (p.getSalary() - wr3.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = wr3;
+					points = p.getProjection() - wr3.getProjection();
+				}
+				else if(p.getProjection() - flex.getProjection() > points && (p.getSalary() - flex.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = flex;
+					points = p.getProjection() - flex.getProjection();
+				}
+			}
+			else if(p instanceof TE){
+				if(p.getProjection() - te.getProjection() > points && (p.getSalary() - te.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = te;
+					points = p.getProjection() - te.getProjection();
+				}
+				else if(p.getProjection() - flex.getProjection() > points && (p.getSalary() - flex.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = flex;
+					points = p.getProjection() - flex.getProjection();
+				}
+			}
+			else if(p instanceof DST){
+				if(p.getProjection() - dst.getProjection() > points && (p.getSalary() - dst.getSalary()) <= salary){ // And can add
+					better = p;
+					worse = dst;
+					points = p.getProjection() - dst.getProjection();
+				}
+			}
+		}
+		if(better != null && worse != null){
+			removePlayer(worse);
+			addPlayer(better);
+		}
+		else System.out.println("No better options");
 	}
 	
 	
