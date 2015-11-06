@@ -46,8 +46,6 @@ public class Scoring {
 
 			String[] temp = projections[i][0].split(",");
 			String name = temp[0];
-			if(name.equals("Le'Veon Bell"))
-				System.out.println("UMM");
 //			temp = temp[1].split(" ");
 //			pos = temp[1];
 			if (!projections[i][1].contains("BYE")) {
@@ -82,8 +80,8 @@ public class Scoring {
 		for (Player p : players) {
 			if (scores.containsKey(p.getName())) {
 //				System.out.println(scores.get(p.getName()));
-				p.setPPG(scores.get(p.getName()));
-				System.out.println(p.getName() + " " + p.getPPG());
+				p.setProjection(scores.get(p.getName()));
+				System.out.println(p.getName() + " " + p.getProjection());
 			}
 		}
 	}

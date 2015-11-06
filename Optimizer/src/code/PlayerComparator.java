@@ -12,8 +12,8 @@ public class PlayerComparator implements Comparator<Player> {
 		final int AFTER = 1;
 		final int EQUAL = 0;
 		
-		if(arg0.getPPG() < arg1.getPPG()) return AFTER;
-		if(arg0.getPPG() > arg1.getPPG()) return BEFORE;
+		if(arg0.getProjection() < arg1.getProjection()) return AFTER;
+		if(arg0.getProjection() > arg1.getProjection()) return BEFORE;
 		return EQUAL;
 	}
 

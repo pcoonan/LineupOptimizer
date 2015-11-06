@@ -6,12 +6,14 @@ public class QB implements Player{
 	private String pos;
 	private double ppg;
 	private double sal;
+	private double projection;
 	
-	public QB(String iname, String ipos, double ippg, double isal){
-		setName(iname);
-		setPosition(ipos);
-		setPPG(ippg);
-		setSalary(isal);
+	public QB(String name, String pos, double ppg, double sal){
+		this.name = name;
+		this.pos = pos;
+		this.ppg = ppg;
+		this.sal = sal;
+		this.projection = 0;
 	}
 	
 	public String toString(){
@@ -99,5 +101,15 @@ public class QB implements Player{
 		if (Double.doubleToLongBits(sal) != Double.doubleToLongBits(other.sal))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void setProjection(double ppg) {
+		this.projection = ppg;
+	}
+
+	@Override
+	public double getProjection() {
+		return this.projection;
 	}
 }

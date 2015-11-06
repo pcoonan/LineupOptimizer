@@ -6,11 +6,14 @@ public class RB implements Player {
 	private String pos;
 	private double ppg;
 	private double sal;
+	private double projection;
+	
 	public RB(String name, String pos, double ppg, double sal) {
 		this.name = name;
 		this.pos = pos;
 		this.ppg = ppg;
 		this.sal = sal;
+		this.projection = 0;
 	}
 
 	@Override
@@ -102,6 +105,16 @@ public class RB implements Player {
 		if (Double.doubleToLongBits(sal) != Double.doubleToLongBits(other.sal))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void setProjection(double ppg) {
+		this.projection = ppg;
+	}
+
+	@Override
+	public double getProjection() {
+		return this.projection;
 	}
 
 }

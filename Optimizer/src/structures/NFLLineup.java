@@ -15,9 +15,19 @@ public class NFLLineup implements Lineup {
 	private static DST dst = null;
 	private static int salary = 50000;
 	private static double score = 0;
+	private static boolean projected = false;
+	
+	public NFLLineup(ArrayList<Player> players) {
+		for(Player p: players){
+			if(p.getProjection() > 0){
+				projected = true;
+				break;
+			}
+		}
+	}
 	@Override
 	public boolean addPlayer(Player p) {
-		if(p.getSalary() > salary || contains(p)) return false;
+		if(p.getSalary() > salary || contains(p) || (projected && p.getProjection() == 0)) return false;
 		if(p instanceof QB){
 			if(qb == null){
 				qb = (QB) p;

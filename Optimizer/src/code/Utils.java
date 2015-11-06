@@ -37,11 +37,7 @@ public class Utils {
 		for(Player p: players){
 			p.setPPG(0.0);
 		}
-		projectionScore(players, Scraper.GetTable("QB"));
-		projectionScore(players, Scraper.GetTable("RB"));
-		projectionScore(players, Scraper.GetTable("WR"));
-		projectionScore(players, Scraper.GetTable("TE"));
-		projectionScore(players, Scraper.GetTable("D/ST"));
+		projectionScore(players);
 		players.sort(new PlayerComparator());
 		createLineup(players);
 	}
@@ -94,7 +90,9 @@ public class Utils {
 	 */
 	
 	public static Lineup createLineup(ArrayList<Player> players) {
-		NFLLineup lineup = new NFLLineup();
+		projectionScore(players);
+		players.sort(new PlayerComparator());
+		NFLLineup lineup = new NFLLineup(players);
 		for(Player p : players){
 			forbidden.put(p, false);
 		}
@@ -137,8 +135,16 @@ public class Utils {
 	 * @return - given player, can be used for adding to output list
 	 */
 	
-	public static ArrayList<Player> projectionScore(ArrayList<Player> players, String[][] projections) {
-		return Scoring.rescorePlayers(players, projections);
+	public static ArrayList<Player> projectionScore(ArrayList<Player> players) {
+//		for(Player p: players){
+//			p.setPPG(0.0);
+//		}
+		Scoring.rescorePlayers(players, Scraper.GetTable("QB"));
+		Scoring.rescorePlayers(players, Scraper.GetTable("RB"));
+		Scoring.rescorePlayers(players, Scraper.GetTable("WR"));
+		Scoring.rescorePlayers(players, Scraper.GetTable("TE"));
+		Scoring.rescorePlayers(players, Scraper.GetTable("D/ST"));
+		return players;
 	}
 	
 }
