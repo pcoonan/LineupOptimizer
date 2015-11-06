@@ -25,12 +25,13 @@ import javax.swing.JPanel;
 //import javax.swing.border.Border;
 import javax.swing.SwingConstants;
 
-//import code.Parser;
-import code.Player;
 import code.Utils;
 import listeners.OpenListener;
 import listeners.RestartListener;
 import listeners.SportListener;
+import structures.Lineup;
+import structures.Player;
+import structures.QB;
 
 public class MainWindow implements Runnable {
 
@@ -194,7 +195,8 @@ public class MainWindow implements Runnable {
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
 		_title.setSize(700,300);
-		ArrayList<Player> list = Utils.createLineup(Utils.readCSV(file));
+		Lineup lineup = Utils.createLineup(Utils.readCSV(file));
+		ArrayList<Player> list = lineup.printLineup();
 		JPanel panel = new JPanel();
 		_title.add(panel);
 		panel.setLayout(new GridLayout(0,5));
@@ -231,16 +233,16 @@ public class MainWindow implements Runnable {
 		int count = -1;
 		for(Player p: list){
 			count++;
-			JLabel jl1 = new JLabel("  " + p.name);
+			JLabel jl1 = new JLabel("  " + p.getName());
 			JLabel jl2;
 			if (count == 7){  //TODO un-hard-code this when projection update is implemented
 				jl2 = new JLabel("  FLEX"); 
 			}
 			else {
-				jl2 = new JLabel("  " + p.pos);
+				jl2 = new JLabel("  " + p.getPosition());
 			}
-			JLabel jl3 = new JLabel("  $"+(int) p.sal);
-			JLabel jl4 = new JLabel("  " + (Math.round(p.ppg * 100.0) / 100.0));
+			JLabel jl3 = new JLabel("  $"+(int) p.getSalary());
+			JLabel jl4 = new JLabel("  " + (Math.round(p.getPPG() * 100.0) / 100.0));
 			JLabel jl5 = new JLabel("  -");
 			jl1.setOpaque(true);
 			jl2.setOpaque(true);
@@ -274,8 +276,8 @@ public class MainWindow implements Runnable {
 			if (count == list.size() - 1){
 				JLabel jlt1 = new JLabel("  TOTAL");
 				JLabel jlt2 = new JLabel("  -");
-				JLabel jlt3 = new JLabel("  $" + (int)(50000.0 - Utils.getSalary()) + "/$50000");
-				JLabel jlt4 = new JLabel("  "+ Math.round(Utils.getPoints() * 100.0) / 100.0);
+				JLabel jlt3 = new JLabel("  $" + (int)(50000.0 - lineup.getSalary()) + "/$50000");
+				JLabel jlt4 = new JLabel("  "+ Math.round(lineup.getScore() * 100.0) / 100.0);
 				JLabel jlt5 = new JLabel("  -");
 				jlt1.setOpaque(true);
 				jlt2.setOpaque(true);
