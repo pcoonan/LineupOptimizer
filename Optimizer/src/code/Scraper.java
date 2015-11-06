@@ -12,11 +12,11 @@ import org.jsoup.select.Elements;
 public class Scraper {
 
     public static void main(String[] args) {
-    	GetTable("QB");  
+//    	GetTable("QB");  
 //    	GetTable("RB"); 
 //    	GetTable("WR");  
-//    	GetTable("TE");  
-//    	GetTable("DST"); 
+    	GetTable("TE");  
+//    	GetTable("D/ST"); 
     }
 
     public static String[][] GetTable(String position){
@@ -30,23 +30,30 @@ public class Scraper {
         	switch (position){
         	case "QB":
         		doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=0").get();
+        		break;
         	case "RB":
         		doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=2").get();
+        		break;
         	case "WR":
         		doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=4").get();
+        		break;
         	case "TE":
         		doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=6").get();
-        	case "DST":
+        		break;
+        	case "D/ST":
         		doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=16").get();
+        		break;
             default:
             	doc = Jsoup.connect("http://games.espn.go.com/ffl/tools/projections?slotCategoryId=0").get();
+            	break;
         	}
               
             Element table = doc.getElementById("playertable_0");
             Elements tds = table.getElementsByTag("td");
-            
+//            position = " " + position + "\n";
             for (Element td : tds) {
-                if(td.text().contains(position)){
+//            	System.out.println(td.text());
+                if(td.text().contains(position) && !td.text().contains("TEAM")){
                 	startDataEntry = true;
                 }
                 
@@ -63,14 +70,20 @@ public class Scraper {
             }
             
             //print the 2D array
-            for(int i = 0; i < 38; i++){
-            	for(int k = 0; k < 14; k++){
-            		if(!playerInfo[i][k].isEmpty()){
-            			System.out.print(playerInfo[i][k] + " ");
-            		}
-            	}
-            	System.out.println();
-            }
+//            for(int i = 0; i < playerInfo.length; i++){
+//            	boolean exit = false;
+//            	if(playerInfo[i][0] == null) break;
+//            	for(int k = 0; k < playerInfo[i].length; k++){
+//            		if(playerInfo[i][k] != null){
+//            			System.out.print(playerInfo[i][k] + " ");
+//            		}
+//            		else{
+//            			break;
+//            		}
+//            	}
+//            	if(exit) break;
+//            	System.out.println();
+//            }
             
         } catch (IOException e) {
             e.printStackTrace();

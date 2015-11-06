@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import com.opencsv.CSVReader;
 
+import structures.QB;
+
 // A parser to collect the data from .csv files and create the appropriate data structures.
 // Maintained by Yousuf Zubairi
 
@@ -30,9 +32,9 @@ public class Parser {
 	 * @param path - a path to the .csv file
 	 * @return an ArrayList of Player objects, one for each line in the file.
 	 */
-	public static ArrayList<Player> readCSVFile(String path){
+	public static ArrayList<QB> readCSVFile(String path){
 		try{
-			ArrayList<Player> players = new ArrayList<Player>();
+			ArrayList<QB> players = new ArrayList<QB>();
 			CSVReader reader = new CSVReader(new FileReader(path));
 			String [] nextLine;
 			int curLine = 0;
@@ -41,7 +43,7 @@ public class Parser {
 				String pos = nextLine[1];
 				double ppg = Double.parseDouble(nextLine[2]);
 				double salary = Double.parseDouble(nextLine[3]);
-				Player p = new Player(name, pos, ppg, salary);
+				QB p = new QB(name, pos, ppg, salary);
 				players.set(curLine, p);
 				curLine++;
 			}

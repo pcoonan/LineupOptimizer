@@ -19,12 +19,12 @@ import javax.swing.JPanel;
 //import javax.swing.JProgressBar;
 //import javax.swing.border.Border;
 
-//import code.Parser;
-import code.Player;
 import code.Utils;
 import listeners.OpenListener;
 import listeners.RestartListener;
 import listeners.SportListener;
+import structures.Player;
+import structures.QB;
 
 public class MainWindow implements Runnable {
 
@@ -175,10 +175,10 @@ public class MainWindow implements Runnable {
 		panel.add(j3);
 		panel.add(j4);
 		for(Player p: list){
-			JLabel jl1 = new JLabel(p.name);
-			JLabel jl3 = new JLabel(""+p.sal);
-			JLabel jl2 = new JLabel(p.pos);
-			JLabel jl4 = new JLabel(p.ppg+"");
+			JLabel jl1 = new JLabel(p.getName());
+			JLabel jl3 = new JLabel(""+p.getSalary());
+			JLabel jl2 = new JLabel(p.getPosition());
+			JLabel jl4 = new JLabel(p.getPPG()+"");
 			panel.add(jl1);
 			panel.add(jl2);
 			panel.add(jl3);
