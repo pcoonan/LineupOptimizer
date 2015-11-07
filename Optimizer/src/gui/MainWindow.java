@@ -36,7 +36,7 @@ import structures.QB;
 public class MainWindow implements Runnable {
 
 	private JFrame _title;
-	private int _sport;
+	private String _sport;
 	private JMenuItem _restart;
 	private JMenuItem _scraper;
 
@@ -49,21 +49,21 @@ public class MainWindow implements Runnable {
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu("File");
-		JMenuItem restart = new JMenuItem("Start a new a algorithm");
-		JMenuItem scraper = new JMenuItem("Grab data from a website");
+		JMenuItem restart = new JMenuItem("New Lineup");
+//		JMenuItem scraper = new JMenuItem("Grab data from a website");
 		menuBar.add(file);
 		file.add(restart);
-		file.add(scraper);
+//		file.add(scraper);
 		_title.setJMenuBar(menuBar);
 		restart.addActionListener(new RestartListener(this));
 		_restart = restart;
-		_scraper = scraper;
+//		_scraper = scraper;
 
 		this.chooseSport();
 	}
 	
-	public void setSport(int i){	//I'm not sure if we need to select different sports but this could be a way of keeping track if need be
-		_sport = i;
+	public void setSport(String str){	//I'm not sure if we need to select different sports but this could be a way of keeping track if need be
+		_sport = str;
 	}
 	
 	//sets window to the initial choose sport menu
@@ -104,13 +104,13 @@ public class MainWindow implements Runnable {
 		panel2.add(bp1);
 		panel2.add(bp2);
 		
-		JButton b1 = new JButton("Basketball");
-		JButton b2 = new JButton("Football");
+		JButton b1 = new JButton("NBA");
+		JButton b2 = new JButton("NFL");
 		bp1.add(b1);
 		bp2.add(b2);
 		
-		b1.addActionListener(new SportListener(this, 1));
-		b2.addActionListener(new SportListener(this, 2));
+		b1.addActionListener(new SportListener(this, "NBA"));
+		b2.addActionListener(new SportListener(this, "NFL"));
 		_title.getContentPane().revalidate();
 		_title.getContentPane().repaint();
 	}
@@ -195,7 +195,7 @@ public class MainWindow implements Runnable {
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
 		_title.setSize(700,300);
-		Lineup lineup = Utils.createLineup(Utils.readCSV(file));
+		Lineup lineup = Utils.createLineup(Utils.readCSV(file),_sport);
 		ArrayList<Player> list = lineup.printLineup();
 		JPanel panel = new JPanel();
 		_title.add(panel);
@@ -235,15 +235,15 @@ public class MainWindow implements Runnable {
 			count++;
 			JLabel jl1 = new JLabel("  " + p.getName());
 			JLabel jl2;
-			if (count == 7){  //TODO un-hard-code this when projection update is implemented
-				jl2 = new JLabel("  FLEX"); 
-			}
-			else {
+//			if (count == 7){  //TODO un-hard-code this when projection update is implemented
+//				jl2 = new JLabel("  FLEX"); 
+//			}
+//			else {
 				jl2 = new JLabel("  " + p.getPosition());
-			}
+//			}
 			JLabel jl3 = new JLabel("  $"+(int) p.getSalary());
 			JLabel jl4 = new JLabel("  " + (Math.round(p.getPPG() * 100.0) / 100.0));
-			JLabel jl5 = new JLabel("  -");
+			JLabel jl5 = new JLabel("  " + (Math.round(p.getProjection() * 100.0) / 100.0));
 			jl1.setOpaque(true);
 			jl2.setOpaque(true);
 			jl3.setOpaque(true);
@@ -278,7 +278,7 @@ public class MainWindow implements Runnable {
 				JLabel jlt2 = new JLabel("  -");
 				JLabel jlt3 = new JLabel("  $" + (int)(50000.0 - lineup.getSalary()) + "/$50000");
 				JLabel jlt4 = new JLabel("  "+ Math.round(lineup.getScore() * 100.0) / 100.0);
-				JLabel jlt5 = new JLabel("  -");
+				JLabel jlt5 = new JLabel("  "+ Math.round(lineup.getProjection() * 100.0) / 100.0);
 				jlt1.setOpaque(true);
 				jlt2.setOpaque(true);
 				jlt3.setOpaque(true);

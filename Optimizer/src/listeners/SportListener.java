@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 public class SportListener implements ActionListener {
 	
 	private MainWindow _mw;
-	private int _sport;
+	private String _sport;
 
-	public SportListener(MainWindow mw, int sport){
+	public SportListener(MainWindow mw, String sport){
 		_mw = mw;
 		_sport = sport;
 	}
