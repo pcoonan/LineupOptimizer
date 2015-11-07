@@ -36,7 +36,7 @@ public class Utils {
 	public static void main(String[] args) {
 		// This is for testing on Patrick's computer - should not be executed as part of the program,
 		// hence the local file path.
-		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek9SM.csv");//"CSV\\DraftKings\\NFLDKSalaries.csv");
+		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesNBA.csv");//"CSV\\DraftKings\\NFLDKSalaries.csv");
 		
 //		toFile(players);
 //		createLineup(players);
@@ -46,7 +46,7 @@ public class Utils {
 //		projectionScore(players);
 //		players.sort(new PlayerComparator());
 //		System.out.println(createLineup(players, "NBA").getScore());
-		Lineup l = alternativeLineup(players, "NFL");
+		Lineup l = createLineup(players, "NBA");
 		l.printLineup();
 		System.out.println(l.getScore());
 	}
@@ -114,6 +114,13 @@ public class Utils {
 	 */
 	
 	public static Lineup createLineup(ArrayList<Player> players, String sport) {
+		Player kill = null;
+		for(Player p: players){
+			if(p.getName().equals("Thabo Sefolosha")){
+				kill = p;
+			}
+		}
+		players.remove(kill);
 		Lineup lineup = null;
 		switch(sport){
 		case "NFL":
@@ -126,7 +133,7 @@ public class Utils {
 		players.sort(new PlayerComparator());
 		for(Player p : players){
 			forbidden.put(p, false);
-			if(p.getName().equals("Thabo Sefolosha") || p.getName().equals("Andrew Bogut")) forbidden.put(p, true);
+//			if(p.getName().equals("Thabo Sefolosha") || p.getName().equals("Andrew Bogut")) forbidden.put(p, true);
 		}
 		while(!lineup.lineupCreated()){
 			for(Player p: players){
@@ -142,7 +149,7 @@ public class Utils {
 				lineup.removePlayer(temp);
 			}
 		}
-		lineup.checkBetter(players);
+//		lineup.checkBetter(players);
 		return lineup;
 	}
 	
