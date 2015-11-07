@@ -15,4 +15,5 @@ public interface Lineup {
 	double getProjection();
 	void checkBetter(ArrayList<Player> players);
 	boolean forceAdd(Player p);
+	boolean isFlex(Player p);
 }

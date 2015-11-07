@@ -394,6 +394,10 @@ public class NFLLineup implements Lineup {
 		return false;
 	
 	}
+	@Override
+	public boolean isFlex(Player p) {
+		return p.equals(flex);
+	}
 	
 	
 }

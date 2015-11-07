@@ -113,7 +113,7 @@ public class Utils {
 	 * until a valid lineup is created.
 	 */
 	
-	public static Lineup createLineup(ArrayList<Player> players, String sport) {
+	public static Lineup alternativeLineup(ArrayList<Player> players, String sport) {
 		Player kill = null;
 		for(Player p: players){
 			if(p.getName().equals("Thabo Sefolosha")){
@@ -153,7 +153,7 @@ public class Utils {
 		return lineup;
 	}
 	
-	public static Lineup alternativeLineup(ArrayList<Player> players, String sport){
+	public static Lineup createLineup(ArrayList<Player> players, String sport){
 		Player kill = null;
 		for(Player p : players){
 			if(p.getName().equals("Andrew Bogut")){
