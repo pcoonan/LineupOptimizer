@@ -21,6 +21,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 //import javax.swing.JProgressBar;
 //import javax.swing.border.Border;
 import javax.swing.SwingConstants;
@@ -31,7 +33,6 @@ import listeners.RestartListener;
 import listeners.SportListener;
 import structures.Lineup;
 import structures.Player;
-import structures.QB;
 
 public class MainWindow implements Runnable {
 
@@ -39,6 +40,8 @@ public class MainWindow implements Runnable {
 	private String _sport;
 	private JMenuItem _restart;
 	private JMenuItem _scraper;
+	private String _username;
+	private String _password;
 
 	//Creates the JFrame and adds the menu bar
 	public void run() {
@@ -122,12 +125,39 @@ public class MainWindow implements Runnable {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.decode("#1a621c")); //Green
 		_title.add(panel);
-		panel.setLayout(new GridLayout(0, 1));
+		panel.setLayout(new GridLayout(0, 2));
 		
-		JLabel selectFile = new JLabel("Please select a CSV file to process.", SwingConstants.CENTER);
-		selectFile.setFont(new Font("Calibri", Font.PLAIN, 25));
+		JLabel dkPrompt = new JLabel("ENTER DRAFT KINGS INFORMATION", SwingConstants.CENTER);
+		dkPrompt.setFont(new Font("Calibri", Font.PLAIN, 20));
+		dkPrompt.setForeground(Color.decode("#ffffff")); //White
+		panel.add(dkPrompt);
+		
+		JLabel selectFile = new JLabel("OR SELECT THE CSV MANUALLY", SwingConstants.CENTER);
+		selectFile.setFont(new Font("Calibri", Font.PLAIN, 20));
 		selectFile.setForeground(Color.decode("#ffffff")); //White
 		panel.add(selectFile);
+		
+		JPanel EntryPanel = new JPanel();
+		EntryPanel.setBackground(Color.decode("#efefe3")); //Dark Cream
+		EntryPanel.setLayout(new GridLayout(0, 2));
+		panel.add(EntryPanel);
+		
+		JLabel userPrompt = new JLabel("Username:", SwingConstants.CENTER);
+		selectFile.setFont(new Font("Calibri", Font.PLAIN, 20));
+		EntryPanel.add(userPrompt);
+		
+		JTextField usernameField = new JTextField(SwingConstants.CENTER);
+		EntryPanel.add(usernameField);
+		
+		JLabel passwordPrompt = new JLabel("Password:", SwingConstants.CENTER);
+		selectFile.setFont(new Font("Calibri", Font.PLAIN, 20));
+		EntryPanel.add(passwordPrompt);
+		
+		JPasswordField passwordField = new JPasswordField(SwingConstants.CENTER);
+		EntryPanel.add(passwordField);
+		
+		JButton EntryPanel3 = new JButton("Continue");
+		EntryPanel.add(EntryPanel3);
 		
 		JButton b = new JButton("Open CSV");
 		JPanel miniPanel = new JPanel(new GridBagLayout());
@@ -304,5 +334,15 @@ public class MainWindow implements Runnable {
 
 		_title.getContentPane().revalidate();
 		_title.getContentPane().repaint();
+	}
+	
+	public void setUsername(String username){
+		_username = username;
+		System.out.println("Setting Username to: " + _username);
+	}
+	
+	public void setPassword(String password){
+		_password = password;
+		System.out.println("Setting Password to: " + _password);
 	}
 }
