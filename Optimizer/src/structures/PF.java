@@ -110,4 +110,14 @@ public class PF implements Player {
 		return true;
 	}
 
+	@Override
+	public String getPos() {
+		return this.pos;
+	}
+
+	@Override
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+
 }

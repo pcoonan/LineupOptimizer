@@ -11,4 +11,6 @@ public interface Player extends Comparable<Player> {
 	void setPPG(double ppg);
 	void setProjection(double ppg);
 	double getProjection();
+	public String getPos();
+	public void setPos(String pos);
 }

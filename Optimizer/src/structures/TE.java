@@ -119,4 +119,14 @@ public class TE implements Player {
 	public double getProjection() {
 		return this.projection;
 	}
+	
+	@Override
+	public String getPos() {
+		return this.pos;
+	}
+
+	@Override
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
 }

@@ -1,6 +1,7 @@
 package structures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NBALineup implements Lineup {
 
@@ -221,7 +222,7 @@ public class NBALineup implements Lineup {
 	}
 
 	@Override
-	public void checkBetter(ArrayList<Player> players) {
+	public void checkBetter(ArrayList<Player> players, HashMap<Player,Boolean> included, HashMap<Player,Boolean> excluded) {
 		Player better = null;
 		Player worse = null;
 		double points = 0;
@@ -417,6 +418,12 @@ public class NBALineup implements Lineup {
 	@Override
 	public boolean isFlex(Player p) {
 		return p.equals(util);
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

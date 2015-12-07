@@ -65,6 +65,14 @@ public class QB implements Player{
 	public void setPPG(double ppg) {
 		this.ppg = ppg;
 	}
+	
+	public String getPos(){
+		return this.pos;
+	}
+	
+	public void setPos(String pos){
+		this.pos = pos;
+	}
 
 	@Override
 	public int hashCode() {
