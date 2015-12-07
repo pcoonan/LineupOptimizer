@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -82,16 +83,19 @@ public class Window extends Application {
 	
 	public static void mainScreen(Stage primaryStage){
 		VBox box = new VBox();
-		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(5, 0, 5, 0));
-		grid.setVgap(4);
-		grid.setHgap(4);
-		grid.setStyle("-fx-background-color: DAE6F3;");
+		HBox grid = new HBox();
+		grid.setPadding(new Insets(10, 10, 10, 10));
+		grid.setSpacing(10);
+//		grid.setVgap(4);
+//		grid.setHgap(4);
+		grid.setStyle("-fx-background-color: #5f9ea0;"); // DAE6F3
 	    
-		grid.add(currentLineup(), 0, 0);
-		grid.add(playerList(), 1, 0);
+		grid.getChildren().addAll(currentLineup(), playerList());
+//		grid.add(currentLineup());
+//		grid.add(playerList());
 		
 		MenuBar menu = new MenuBar();
+		menu.setMinHeight(30);
 		Menu menuFile = new Menu("File");
 		MenuItem home = new MenuItem("Home");
 		home.setOnAction(new EventHandler<ActionEvent>(){
@@ -193,8 +197,9 @@ public class Window extends Application {
 	    }
 		table.setItems(data);
 		table.getColumns().addAll(nameCol, posCol, salCol, pointsCol, col_action);
+		table.setMinWidth(585);
+		table.setMinHeight(450);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		table.setMinWidth(600);
 		return table;
 	}
 
@@ -214,14 +219,66 @@ public class Window extends Application {
 	    salCol.setCellValueFactory(new PropertyValueFactory<Player, Double>("salary"));
 	    pointsCol.setCellValueFactory(new PropertyValueFactory<Player, Double>("projection"));
 	    
+	    @SuppressWarnings("rawtypes")
+		TableColumn col_action = new TableColumn<>("Action");
+	    TableColumn include_action = new TableColumn<>("Include");
+        col_action.setSortable(false);
+        include_action.setSortable(false);
+        
+        include_action.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Player, Boolean>, 
+                ObservableValue<Boolean>>() {
+ 
+            @Override
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Player, Boolean> p) {
+                return new SimpleBooleanProperty(p.getValue() != null);
+            }
+        });
+ 
+        include_action.setCellFactory(
+                new Callback<TableColumn<Player, Boolean>, TableCell<Player, Boolean>>() {
+ 
+            @Override
+            public TableCell<Player, Boolean> call(TableColumn<Player, Boolean> p) {
+                return new ButtonCell(table, "Include");
+            }
+         
+        });
+        
+        @SuppressWarnings("rawtypes")
+		TableColumn exclude_action = new TableColumn<>("Exclude");
+        exclude_action.setSortable(false);
+         
+        exclude_action.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Player, Boolean>, 
+                ObservableValue<Boolean>>() {
+ 
+            @Override
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Player, Boolean> p) {
+                return new SimpleBooleanProperty(p.getValue() != null);
+            }
+        });
+ 
+        exclude_action.setCellFactory(
+                new Callback<TableColumn<Player, Boolean>, TableCell<Player, Boolean>>() {
+ 
+            @Override
+            public TableCell<Player, Boolean> call(TableColumn<Player, Boolean> p) {
+                return new ButtonCell(table, "Exclude");
+            }
+         
+        });
+        col_action.getColumns().addAll(include_action, exclude_action);
+        
 		Lineup line = Controller.getLineup();
 		ArrayList<Player> players = line.printLineup();
 		for(Player p: players){
 	    	data.add(p);
 	    }
 		table.setItems(data);
-		table.getColumns().addAll(nameCol, posCol, salCol, pointsCol);
-		table.setMinWidth(500);
+		table.getColumns().addAll(nameCol, posCol, salCol, pointsCol, col_action);
+		table.setMinWidth(585);
+		table.setMinHeight(450);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		return table;
 	}
