@@ -1,6 +1,7 @@
 package structures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface Lineup {
 
@@ -13,7 +14,8 @@ public interface Lineup {
 	boolean lineupCreated();
 	boolean contains(Player player);
 	double getProjection();
-	void checkBetter(ArrayList<Player> players);
+	void checkBetter(ArrayList<Player> players, HashMap<Player,Boolean> included, HashMap<Player,Boolean> excluded);
 	boolean forceAdd(Player p);
 	boolean isFlex(Player p);
+	void clear();
 }

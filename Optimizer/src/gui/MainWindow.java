@@ -1,16 +1,12 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 //import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-//import java.util.concurrent.Executors;
-//import java.util.concurrent.ScheduledExecutorService;
-//import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
@@ -25,13 +21,12 @@ import javax.swing.JPanel;
 //import javax.swing.border.Border;
 import javax.swing.SwingConstants;
 
-import code.Utils;
+import code.Controller;
 import listeners.OpenListener;
 import listeners.RestartListener;
 import listeners.SportListener;
 import structures.Lineup;
 import structures.Player;
-import structures.QB;
 
 public class MainWindow implements Runnable {
 
@@ -195,7 +190,9 @@ public class MainWindow implements Runnable {
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
 		_title.setSize(700,300);
-		Lineup lineup = Utils.createLineup(Utils.readCSV(file),_sport);
+		Controller.load(file);
+		Controller.setLineup(_sport);
+		Lineup lineup = Controller.getLineup(); //Utils.createLineup(Utils.readCSV(file),_sport, new HashMap<Player, Boolean>(), new HashMap<Player, Boolean>());
 		ArrayList<Player> list = lineup.printLineup();
 		JPanel panel = new JPanel();
 		_title.add(panel);

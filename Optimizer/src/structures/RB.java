@@ -120,4 +120,15 @@ public class RB implements Player {
 		return this.projection;
 	}
 
+	@Override
+	public String getPos() {
+		// TODO Auto-generated method stub
+		return this.pos;
+	}
+
+	@Override
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+
 }

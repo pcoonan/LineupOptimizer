@@ -109,5 +109,15 @@ public class SF implements Player {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String getPos() {
+		return this.pos;
+	}
+
+	@Override
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
 
 }
