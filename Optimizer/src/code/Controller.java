@@ -20,7 +20,6 @@ public class Controller {
 	
 	public static boolean include(Player p){
 		if(players.contains(p)){
-			System.out.println("Player in");
 			included.put(p, true);
 			excluded.put(p, false);
 			return true;

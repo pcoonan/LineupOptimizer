@@ -139,8 +139,7 @@ public class Window extends Application {
 	    
 	    @SuppressWarnings("rawtypes")
 		TableColumn col_action = new TableColumn<>("Action");
-	    @SuppressWarnings("rawtypes")
-		TableColumn include_action = new TableColumn<>("Include");
+	    TableColumn include_action = new TableColumn<>("Include");
         col_action.setSortable(false);
         include_action.setSortable(false);
         
