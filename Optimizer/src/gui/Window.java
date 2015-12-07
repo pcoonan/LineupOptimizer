@@ -25,7 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -83,6 +86,7 @@ public class Window extends Application {
 	
 	public static void mainScreen(Stage primaryStage){
 		VBox box = new VBox();
+		box.setStyle("-fx-background-color: #5f9ea0;");
 		HBox grid = new HBox();
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setSpacing(10);
@@ -121,8 +125,20 @@ public class Window extends Application {
 		});
 		menuFile.getItems().addAll(home, create, exit);
 		menu.getMenus().add(menuFile);
-		box.getChildren().addAll(menu, grid);
-		Scene scene = new Scene(box, 1200, 500);
+		HBox labels = new HBox();
+		labels.setPadding(new Insets(10, 10, 10, 10));
+		labels.setSpacing(10);
+		StackPane lineupPane = new StackPane();
+		Text lineupText = new Text("Lineup");
+		lineupText.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
+		lineupPane.getChildren().addAll(new Rectangle(585, 40, Color.CADETBLUE), lineupText);
+		StackPane playerPane = new StackPane();
+		Text playerText = new Text("Players");
+		playerText.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
+		playerPane.getChildren().addAll(new Rectangle(585, 40, Color.CADETBLUE), playerText);
+		labels.getChildren().addAll(lineupPane, playerPane);
+		box.getChildren().addAll(menu, labels, grid);
+		Scene scene = new Scene(box, 1200, 560);
 		primaryStage.setScene(scene);
 	}
 
@@ -143,7 +159,8 @@ public class Window extends Application {
 	    
 	    @SuppressWarnings("rawtypes")
 		TableColumn col_action = new TableColumn<>("Action");
-	    TableColumn include_action = new TableColumn<>("Include");
+	    @SuppressWarnings("rawtypes")
+		TableColumn include_action = new TableColumn<>("Include");
         col_action.setSortable(false);
         include_action.setSortable(false);
         
@@ -221,7 +238,8 @@ public class Window extends Application {
 	    
 	    @SuppressWarnings("rawtypes")
 		TableColumn col_action = new TableColumn<>("Action");
-	    TableColumn include_action = new TableColumn<>("Include");
+	    @SuppressWarnings("rawtypes")
+		TableColumn include_action = new TableColumn<>("Include");
         col_action.setSortable(false);
         include_action.setSortable(false);
         
