@@ -234,9 +234,6 @@ public class Utils {
 	 */
 
 	public static ArrayList<Player> projectionScore(ArrayList<Player> players) {
-		// for(Player p: players){
-		// p.setPPG(0.0);
-		// }
 		Scoring.rescorePlayers(players, Scraper.GetTable("QB"));
 		Scoring.rescorePlayers(players, Scraper.GetTable("RB"));
 		Scoring.rescorePlayers(players, Scraper.GetTable("WR"));

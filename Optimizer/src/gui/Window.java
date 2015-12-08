@@ -65,7 +65,7 @@ public class Window extends Application {
 		Label dir = new Label("Directory:");
 		grid.add(dir, 0, 1);
 		
-		TextField text = new TextField("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek13SM.csv");
+		TextField text = new TextField();
 		grid.add(text, 1, 1, 3, 1);
 		
 		Button sel = new Button("Select folder...");
