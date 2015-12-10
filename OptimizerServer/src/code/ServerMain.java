@@ -15,13 +15,24 @@ public class ServerMain {
 
 	public static void main(String[] args) {
 		try {
+			System.out.println("Server Initialized");
 			ServerSocket s = new ServerSocket(1234);
 			Socket so = s.accept();
 			System.out.println("Connection made");
+			long i = 0;
+			while(i != 10000 * 1000000){
+				i++;
+			}
+			System.out.println("While loop finished");
 			BufferedReader in = new BufferedReader(new InputStreamReader(so.getInputStream()));
 			PrintWriter out = new PrintWriter(so.getOutputStream(), false);
 			String message = in.readLine();
+			int message2 = in.read();
+			System.out.println("message: " + message);
+			System.out.println("message2: " + message2);
+			System.out.print("out.readline(): " + out.toString());
 			
+			if(message != null){
 			if(message.equals("NBA")){
 				Lineup lineup = Utils.createLineup(Utils.readCSV("CSV/DraftKings/NBADKSalaries.csv"),"NBA");
 				ArrayList<Player> players = lineup.printLineup();
@@ -45,10 +56,13 @@ public class ServerMain {
 				out.println("error");
 			}
 			s.close();
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
+	
 }
