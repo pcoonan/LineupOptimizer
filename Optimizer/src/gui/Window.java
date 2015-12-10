@@ -14,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -40,12 +41,15 @@ import structures.Player;
 
 public class Window extends Application {
 
+	private static Controller control;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		control = new Controller();
 		primaryStage.setTitle("Lineup Optimizer");
 		loadScreen(primaryStage);
 		primaryStage.show();
@@ -68,17 +72,24 @@ public class Window extends Application {
 		TextField text = new TextField();
 		grid.add(text, 1, 1, 3, 1);
 		
+		Label server = new Label("Server:");
+		grid.add(server, 0, 2);
+		
+		CheckBox cb = new CheckBox();
+		cb.setSelected(false);
+		grid.add(cb, 1, 2);
+		
 		Button sel = new Button("Select folder...");
 		sel.setOnAction(new SelectHandler(primaryStage, text));
-		grid.add(sel, 0, 2);
+		grid.add(sel, 0, 3);
 		
 		Button nbalaunch = new Button("NBA");
-		nbalaunch.setOnAction(new Launcher(primaryStage, "NBA", text));
-		grid.add(nbalaunch, 1, 2);
+		nbalaunch.setOnAction(new Launcher(primaryStage, "NBA", text, cb));
+		grid.add(nbalaunch, 1, 3);
 		
 		Button nfllaunch = new Button("NFL");
-		nfllaunch.setOnAction(new Launcher(primaryStage, "NFL", text));
-		grid.add(nfllaunch, 2, 2);
+		nfllaunch.setOnAction(new Launcher(primaryStage, "NFL", text, cb));
+		grid.add(nfllaunch, 2, 3);
 		
 		Scene scene = new Scene(grid, 400, 300);
 		primaryStage.setScene(scene);
@@ -112,7 +123,7 @@ public class Window extends Application {
 		create.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.setLineup("NFL");
+				control.setLineup("NFL");
 				mainScreen(primaryStage);
 			}
 		});
@@ -208,7 +219,7 @@ public class Window extends Application {
          
         });
         col_action.getColumns().addAll(include_action, exclude_action);
-		ArrayList<Player> players = Controller.getPlayers();
+		ArrayList<Player> players = control.getPlayers();
 		for(Player p: players){
 	    	data.add(p);
 	    }
@@ -288,7 +299,7 @@ public class Window extends Application {
         });
         col_action.getColumns().addAll(include_action, exclude_action);
         
-		Lineup line = Controller.getLineup();
+		Lineup line = control.getLineup();
 		ArrayList<Player> players = line.printLineup();
 		for(Player p: players){
 	    	data.add(p);
@@ -313,9 +324,9 @@ public class Window extends Application {
                     int selected = getTableRow().getIndex();
                     Player p = (Player) table.getItems().get(selected);
                     if(type.equalsIgnoreCase("include"))
-                    	Controller.include(p);
+                    	control.include(p);
                     else
-                    	Controller.exclude(p);
+                    	control.exclude(p);
                 }
             });
         }
@@ -329,5 +340,9 @@ public class Window extends Application {
             }
         }
     }
+
+	public static Controller getControl() {
+		return control;
+	}
 
 }

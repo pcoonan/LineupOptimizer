@@ -8,47 +8,76 @@ import structures.Player;
 
 public class Controller {
 
-	private static Lineup line;
-	private static ArrayList<Player> players = new ArrayList<Player>();
-	private static HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
-	private static HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
-	
-	public static void load(String file){
+	private boolean isServer = false;
+	private Server server;
+	private Lineup line;
+	private ArrayList<Player> players = new ArrayList<Player>();
+	private HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
+	private HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
+
+	public void setServer() {
+		isServer = true;
+		server = new Server();
+		server.setServerPath("localhost");
+		server.connectToServer();
+	}
+
+	public void load(String file) {
 		setPlayers(Utils.readCSV(file));
 		Utils.projectionScore(players);
 	}
-	
-	public static boolean include(Player p){
-		if(players.contains(p)){
-			included.put(p, true);
-			excluded.put(p, false);
-			return true;
-		} else return false;
+
+	public boolean include(Player p) {
+		if (isServer) {
+			return server.addToServer(p);
+		} else {
+			if (players.contains(p)) {
+				included.put(p, true);
+				excluded.put(p, false);
+				return true;
+			}
+		}
+		return false;
 	}
-	
-	public static boolean exclude(Player p){
-		if(players.contains(p)){
-			excluded.put(p, true);
-			included.put(p, false);
-			return true;
-		} return false;
+
+	public boolean exclude(Player p) {
+		if (isServer) {
+			return server.removeFromServer(p);
+		} else {
+			if (players.contains(p)) {
+				excluded.put(p, true);
+				included.put(p, false);
+				return true;
+			}
+		}
+		return false;
 	}
-	public static ArrayList<Player> getPlayers() {
-		return players;
+
+	public ArrayList<Player> getPlayers() {
+		if (isServer) {
+			return server.getPlayersFromServer();
+		} else
+			return players;
 	}
-	public static void setPlayers(ArrayList<Player> players) {
-		Controller.players = players;
-		for(Player p: players){
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+		for (Player p : players) {
 			included.put(p, false);
 			excluded.put(p, false);
 		}
 	}
-	public static Lineup getLineup() {
+
+	public Lineup getLineup() {
 		return line;
 	}
-	public static void setLineup(String sport) {
-		Controller.line = Utils.createLineup(players, sport, included, excluded);
+
+	public void setLineup(String sport) {
+		if (isServer) {
+			this.line = server.getLineupFromServer(sport);
+		} else {
+			this.line = Utils.createLineup(players, sport, included, excluded);
+		}
 	}
-	
-	
+
 }

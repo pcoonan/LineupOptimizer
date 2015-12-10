@@ -38,6 +38,7 @@ public class MainWindow implements Runnable {
 	private JMenuItem _scraper;
 	private String _username;
 	private String _password;
+	private static Controller control;
 
 	//Creates the JFrame and adds the menu bar
 	public void run() {
@@ -221,9 +222,9 @@ public class MainWindow implements Runnable {
 	public void startAlgo(String file){
 		_title.getContentPane().removeAll();
 		_title.setSize(700,300);
-		Controller.load(file);
-		Controller.setLineup(_sport);
-		Lineup lineup = Controller.getLineup(); //Utils.createLineup(Utils.readCSV(file),_sport, new HashMap<Player, Boolean>(), new HashMap<Player, Boolean>());
+		control.load(file);
+		control.setLineup(_sport);
+		Lineup lineup = control.getLineup(); //Utils.createLineup(Utils.readCSV(file),_sport, new HashMap<Player, Boolean>(), new HashMap<Player, Boolean>());
 		ArrayList<Player> list = lineup.printLineup();
 		JPanel panel = new JPanel();
 		_title.add(panel);

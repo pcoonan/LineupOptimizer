@@ -28,6 +28,10 @@ public class NFLLineup implements Lineup {
 		}
 	}
 
+	public NFLLineup() {
+		projected = true;
+	}
+
 	@Override
 	public boolean addPlayer(Player p) {
 		if (p.getSalary() > salary || contains(p) || (projected && p.getProjection() == 0))

@@ -13,6 +13,10 @@ public class PF implements Player {
 		this.ppg = ppg;
 		this.sal = sal;
 	}
+	
+	public String toString(){
+		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
+	}
 
 	@Override
 	public int compareTo(Player arg0) {

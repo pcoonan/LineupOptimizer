@@ -242,4 +242,52 @@ public class Utils {
 		return players;
 	}
 
+	public static Player reconstructPlayer(String fromServer) {
+		Player ret = null;
+		String[] tuple = fromServer.split(" ");
+		switch (tuple[1]) {
+		case "QB":
+			ret = new QB(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "RB":
+			ret = new RB(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "WR":
+			ret = new WR(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "TE":
+			ret = new TE(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "DST":
+			ret = new DST(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "PG":
+			ret = new PG(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "SG":
+			ret = new SG(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "SF":
+			ret = new SF(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "PF":
+			ret = new PF(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		case "C":
+			ret = new C(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));
+			ret.setProjection(Double.parseDouble(tuple[4]));
+			break;
+		}
+		return ret;
+	}
+
 }
