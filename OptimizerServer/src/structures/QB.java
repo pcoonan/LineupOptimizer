@@ -17,7 +17,7 @@ public class QB implements Player{
 	}
 	
 	public String toString(){
-		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG();
+		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
 	}
 
 	@Override

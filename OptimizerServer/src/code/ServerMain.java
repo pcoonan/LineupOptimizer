@@ -14,40 +14,55 @@ import structures.Player;
 public class ServerMain {
 
 	public static void main(String[] args) {
+		Controller control = new Controller();
 		try {
 			ServerSocket s = new ServerSocket(1234);
 			Socket so = s.accept();
 			System.out.println("Connection made");
 			BufferedReader in = new BufferedReader(new InputStreamReader(so.getInputStream()));
 			PrintWriter out = new PrintWriter(so.getOutputStream(), false);
-			String message = in.readLine();
+			String message;
 			
-			if(message.equals("NBA")){
-				Lineup lineup = Utils.createLineup(Utils.readCSV("CSV/DraftKings/NBADKSalaries.csv"),"NBA");
-				ArrayList<Player> players = lineup.printLineup();
-				for(Player p : players){
-					out.print(p.getName()+" ");
+			while ((message = in.readLine()) != null) {
+				if (message.equals("NBA")) {
+					control.load("CSV/DraftKings/NBADKSalaries.csv");
+					control.setLineup("NBA");
+					Lineup lineup = control.getLineup();
+					ArrayList<Player> players = lineup.printLineup();
+					for (Player p : players) {
+						out.println(p.toString());
+					}
+					out.flush();
+				} else if (message.equals("NFL")) {
+					control.load("CSV/DraftKings/NFLDKSalaries.csv");
+					control.setLineup("NFL");
+					Lineup lineup = control.getLineup();
+					ArrayList<Player> players = lineup.printLineup();
+					for (Player p : players) {
+						out.println(p.toString());
+					}
+					out.flush();
+				} else if (message.equals("players")) {
+					ArrayList<Player> players = control.getPlayers();
+					for (Player p : players) {
+						out.println(p.toString());
+					}
+					out.flush();
+				} else if (message.startsWith("include")) {
+					Player p = Utils.reconstructPlayer(message.replaceAll("include ", ""));
+					control.include(p);
+				} else if (message.startsWith("exclude")) {
+					Player p = Utils.reconstructPlayer(message.replaceAll("exclude ", ""));
+					control.exclude(p);
+				} else if (message.equals("exit")) {
+					break;
+				} else {
+					System.out.println("Unintelligible message from the client: " + message);
+					out.println("error");
 				}
-				out.flush();
-			}
-			
-			else if(message.equals("NFL")){
-				Lineup lineup = Utils.createLineup(Utils.readCSV("CSV/DraftKings/NFLDKSalaries.csv"),"NFL");
-				ArrayList<Player> players = lineup.printLineup();
-				for(Player p : players){
-					out.print(p.getName()+" ");
-				}
-				out.flush();
-			}
-			
-			else{
-				System.out.println("Unintelligible message from the client: " +message);
-				out.println("error");
 			}
 			s.close();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

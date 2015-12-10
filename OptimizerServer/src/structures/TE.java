@@ -15,6 +15,10 @@ public class TE implements Player {
 		this.sal = sal;
 		this.projection = 0;
 	}
+	
+	public String toString(){
+		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
+	}
 
 	@Override
 	public int compareTo(Player arg0) {

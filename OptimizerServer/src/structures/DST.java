@@ -16,6 +16,10 @@ public class DST implements Player {
 		this.projection = 0;
 	}
 	
+	public String toString(){
+		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
+	}
+	
 	@Override
 	public int compareTo(Player arg0) {
 		final int BEFORE = -1;

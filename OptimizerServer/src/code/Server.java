@@ -1,18 +1,24 @@
 package code;
 
-import java.util.ArrayList;
-
-import structures.Player;
-
 import java.io.IOException;
-import java.net.*;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+import structures.Lineup;
+import structures.Player;
 
 public class Server {
 	
 	private String url; //http url to the server
+	private Socket server;
 	
 	public void startServer(){
-		
+		try{
+			server = new Socket(url, 1234);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void connectToServer(){
@@ -40,7 +46,7 @@ public class Server {
 	 * @return
 	 */
 	public boolean checkServer(){
-		return true;
+		return server != null;
 	}
 	
 	
@@ -58,6 +64,14 @@ public class Server {
 	 * @return
 	 */
 	public boolean addToServer(Player p){
+		String output = "include " + p.toString();
+		try {
+			PrintWriter out = new PrintWriter(server.getOutputStream());
+			out.println(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 
@@ -68,6 +82,14 @@ public class Server {
 	 * @return
 	 */
 	public boolean removeFromServer(Player p){
+		String output = "exclude " + p.toString();
+		try {
+			PrintWriter out = new PrintWriter(server.getOutputStream());
+			out.println(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 	
@@ -76,7 +98,7 @@ public class Server {
 	 * this method de-serializes the server's output and returns it as an ArrayList of Players
 	 * @return
 	 */
-	public ArrayList<Player> getLineupFromServer(){
+	public Lineup getLineupFromServer(){
 		return null;
 	}
 	

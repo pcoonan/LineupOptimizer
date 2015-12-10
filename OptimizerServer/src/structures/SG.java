@@ -14,6 +14,10 @@ public class SG implements Player {
 		this.sal = sal;
 	}
 
+	public String toString(){
+		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
+	}
+	
 	@Override
 	public int compareTo(Player arg0) {
 		final int BEFORE = -1;
