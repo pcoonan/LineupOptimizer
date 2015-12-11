@@ -164,15 +164,15 @@ public class NFLLineup implements Lineup {
 	@Override
 	public ArrayList<Player> printLineup() {
 		ArrayList<Player> out = new ArrayList<Player>();
-		out.add(printPlayer(qb));
-		out.add(printPlayer(rb1));
-		out.add(printPlayer(rb2));
-		out.add(printPlayer(wr1));
-		out.add(printPlayer(wr2));
-		out.add(printPlayer(wr3));
-		out.add(printPlayer(te));
-		out.add(printPlayer(flex));
-		out.add(printPlayer(dst));
+		out.add(qb);
+		out.add(rb1);
+		out.add(rb2);
+		out.add(wr1);
+		out.add(wr2);
+		out.add(wr3);
+		out.add(te);
+		out.add(flex);
+		out.add(dst);
 		return out;
 	}
 

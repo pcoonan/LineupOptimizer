@@ -81,7 +81,7 @@ public class Scoring {
 			if (scores.containsKey(p.getName())) {
 //				System.out.println(scores.get(p.getName()));
 				p.setProjection(scores.get(p.getName()));
-				System.out.println(p.getName() + " " + p.getProjection());
+//				System.out.println(p.getName() + " " + p.getProjection());
 			}
 		}
 		

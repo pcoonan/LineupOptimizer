@@ -34,28 +34,17 @@ public class Utils {
 	private static HashMap<Player, Boolean> forbidden = new HashMap<Player, Boolean>();
 
 	public static void main(String[] args) {
-		// This is for testing on Patrick's computer - should not be executed as
-		// part of the program,
-		// hence the local file path.
-		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek13SM.csv");// "CSV\\DraftKings\\NFLDKSalaries.csv");
-
-		// toFile(players);
-		// createLineup(players);
-		// for(Player p: players){
-		// p.setPPG(0.0);
-		// }
-		// projectionScore(players);
-		// players.sort(new PlayerComparator());
-		// System.out.println(createLineup(players, "NBA").getScore());
-	    HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
-		HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
-		for(Player p: players){
-			included.put(p, false);
-			excluded.put(p, false);
-		}
-		Lineup l = createLineup(players, "NFL", included, excluded);
-		l.printLineup();
-		System.out.println(l.getScore());
+//		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek13SM.csv");// "CSV\\DraftKings\\NFLDKSalaries.csv");
+//
+//	    HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
+//		HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
+//		for(Player p: players){
+//			included.put(p, false);
+//			excluded.put(p, false);
+//		}
+//		Lineup l = createLineup(players, "NFL", included, excluded);
+//		l.printLineup();
+//		System.out.println(l.getScore());
 	}
 
 	public static ArrayList<Player> readCSV(String file) {
@@ -244,7 +233,7 @@ public class Utils {
 
 	public static Player reconstructPlayer(String fromServer) {
 		Player ret = null;
-		String[] tuple = fromServer.split(" ");
+		String[] tuple = fromServer.split(",");
 		switch (tuple[1]) {
 		case "QB":
 			ret = new QB(tuple[0], tuple[1], Double.parseDouble(tuple[3]), Double.parseDouble(tuple[2]));

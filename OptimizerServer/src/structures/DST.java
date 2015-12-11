@@ -17,7 +17,7 @@ public class DST implements Player {
 	}
 	
 	public String toString(){
-		return getName() + " " + getPosition() + " " + getSalary() + " " + getPPG() + " " + getProjection();
+		return getName() + "," + getPosition() + "," + getSalary() + "," + getPPG() + "," + getProjection();
 	}
 	
 	@Override

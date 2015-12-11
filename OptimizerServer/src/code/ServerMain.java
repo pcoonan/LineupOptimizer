@@ -15,38 +15,49 @@ public class ServerMain {
 
 	public static void main(String[] args) {
 		Controller control = new Controller();
+		boolean loaded = false;
 		try {
 			ServerSocket s = new ServerSocket(1234);
 			Socket so = s.accept();
 			System.out.println("Connection made");
 			BufferedReader in = new BufferedReader(new InputStreamReader(so.getInputStream()));
 			PrintWriter out = new PrintWriter(so.getOutputStream(), false);
-			String message;
 			
+			String message;
 			while ((message = in.readLine()) != null) {
 				if (message.equals("NBA")) {
-					control.load("CSV/DraftKings/NBADKSalaries.csv");
+					if(!loaded) {
+						control.load("CSV/DraftKings/NBADKSalaries.csv");
+						loaded = true;
+					}
 					control.setLineup("NBA");
 					Lineup lineup = control.getLineup();
 					ArrayList<Player> players = lineup.printLineup();
 					for (Player p : players) {
 						out.println(p.toString());
+						out.flush();
 					}
-					out.flush();
 				} else if (message.equals("NFL")) {
-					control.load("CSV/DraftKings/NFLDKSalaries.csv");
+					if(!loaded) {
+						control.load("CSV/DraftKings/DKSalariesWeek14SM.csv");
+						loaded = true;
+					}
 					control.setLineup("NFL");
 					Lineup lineup = control.getLineup();
 					ArrayList<Player> players = lineup.printLineup();
 					for (Player p : players) {
 						out.println(p.toString());
+						out.flush();
 					}
+					out.println("end");
 					out.flush();
 				} else if (message.equals("players")) {
 					ArrayList<Player> players = control.getPlayers();
 					for (Player p : players) {
 						out.println(p.toString());
+						out.flush();
 					}
+					out.println("end");
 					out.flush();
 				} else if (message.startsWith("include")) {
 					Player p = Utils.reconstructPlayer(message.replaceAll("include ", ""));
