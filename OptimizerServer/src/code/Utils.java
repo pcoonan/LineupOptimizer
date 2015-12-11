@@ -223,11 +223,11 @@ public class Utils {
 	 */
 
 	public static ArrayList<Player> projectionScore(ArrayList<Player> players) {
-		Scoring.rescorePlayers(players, Scraper.GetTable("QB"));
-		Scoring.rescorePlayers(players, Scraper.GetTable("RB"));
-		Scoring.rescorePlayers(players, Scraper.GetTable("WR"));
-		Scoring.rescorePlayers(players, Scraper.GetTable("TE"));
-		Scoring.rescorePlayers(players, Scraper.GetTable("D/ST"));
+		Scoring.rescorePlayers(players, Scraper.GetTable("QB"), "QB");
+		Scoring.rescorePlayers(players, Scraper.GetTable("RB"), "RB");
+		Scoring.rescorePlayers(players, Scraper.GetTable("WR"), "WR");
+		Scoring.rescorePlayers(players, Scraper.GetTable("TE"), "TE");
+		Scoring.rescorePlayers(players, Scraper.GetTable("D/ST"), "DST");
 		return players;
 	}
 
