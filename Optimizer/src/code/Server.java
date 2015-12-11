@@ -71,8 +71,9 @@ public class Server {
 	public boolean addToServer(Player p){
 		String output = "include " + p.toString();
 		try {
-			PrintWriter out = new PrintWriter(server.getOutputStream());
+			PrintWriter out = new PrintWriter(server.getOutputStream(), false);
 			out.println(output);
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -89,8 +90,9 @@ public class Server {
 	public boolean removeFromServer(Player p){
 		String output = "exclude " + p.toString();
 		try {
-			PrintWriter out = new PrintWriter(server.getOutputStream());
+			PrintWriter out = new PrintWriter(server.getOutputStream(), false);
 			out.println(output);
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -109,11 +111,12 @@ public class Server {
 		else ret = new NBALineup();
 		
 		try{
-			PrintWriter out = new PrintWriter(server.getOutputStream());
+			PrintWriter out = new PrintWriter(server.getOutputStream(), false);
 			out.println(sport);
+			out.flush();
 			BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
 			String fromServer;
-			while((fromServer = in.readLine()) != null){
+			while(!(fromServer = in.readLine()).equals("end")){
 				Player p = Utils.reconstructPlayer(fromServer);
 				ret.addPlayer(p);
 			}
@@ -131,13 +134,19 @@ public class Server {
 	public ArrayList<Player> getPlayersFromServer() {
 		ArrayList<Player> ret = new ArrayList<Player>();
 		try{
-			PrintWriter out = new PrintWriter(server.getOutputStream());
+			PrintWriter out = new PrintWriter(server.getOutputStream(), false);
 			out.println("players");
+			out.flush();
 			BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
 			String fromServer;
-			while((fromServer = in.readLine()) != null){
+			while(!(fromServer = in.readLine()).equals("end")){
 				Player p = Utils.reconstructPlayer(fromServer);
-				ret.add(p);
+				if(p != null){
+					ret.add(p);
+				}
+				else{
+					System.out.println("Problem");
+				}
 			}
 		}
 		catch(Exception e){

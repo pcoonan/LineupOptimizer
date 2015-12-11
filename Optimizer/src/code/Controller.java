@@ -1,5 +1,7 @@
 package code;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,8 +20,12 @@ public class Controller {
 	public void setServer() {
 		isServer = true;
 		server = new Server();
-		server.setServerPath("localhost");
-		server.connectToServer();
+		try {
+			server.setServerPath(InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		server.startServer();
 	}
 
 	public void load(String file) {
