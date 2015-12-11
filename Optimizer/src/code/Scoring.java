@@ -31,7 +31,7 @@ public class Scoring {
 		rules.put(RECTD, 6.0);
 	}
 
-	public static ArrayList<Player> rescorePlayers(ArrayList<Player> players, String[][] projections) {
+	public static ArrayList<Player> rescorePlayers(ArrayList<Player> players, String[][] projections, String position) {
 		if (scoring == null) {
 			scoring = new Scoring();
 		}
@@ -71,14 +71,14 @@ public class Scoring {
 			scores.put(name, score);
 //			System.out.println(name + " " + score);
 		}
-		updateScore(scores, pos, players);
+		updateScore(scores, pos, players, position);
 		
 		return players;
 	}
 
-	private static void updateScore(HashMap<String, Double> scores, String pos, ArrayList<Player> players) {
+	private static void updateScore(HashMap<String, Double> scores, String pos, ArrayList<Player> players, String position) {
 		for (Player p : players) {
-			if (scores.containsKey(p.getName())) {
+			if (scores.containsKey(p.getName()) && p.getPosition().equals(position)) {
 //				System.out.println(scores.get(p.getName()));
 				p.setProjection(scores.get(p.getName()));
 //				System.out.println(p.getName() + " " + p.getProjection());
