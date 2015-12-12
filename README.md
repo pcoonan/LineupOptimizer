@@ -1,4 +1,4 @@
 # LineupOptimizer
 The semester long project for CSE 442.
 
-To use, load a file using its full name (including .csv) and then exectute the sort command. At this point, the command is incredibly slow.
+The current working version is located in the branch 'patrick'. To use, launch the Window.java main and the GUI will fire up. To use the server, also run the ServerMain.java main and select the 'Server' option on the client GUI.
