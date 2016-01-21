@@ -34,17 +34,22 @@ public class Utils {
 	private static HashMap<Player, Boolean> forbidden = new HashMap<Player, Boolean>();
 
 	public static void main(String[] args) {
-//		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesWeek13SM.csv");// "CSV\\DraftKings\\NFLDKSalaries.csv");
-//
-//	    HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
-//		HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
-//		for(Player p: players){
-//			included.put(p, false);
-//			excluded.put(p, false);
-//		}
-//		Lineup l = createLineup(players, "NFL", included, excluded);
-//		l.printLineup();
-//		System.out.println(l.getScore());
+		ArrayList<Player> players = readCSV("C:\\Users\\Patrick\\Documents\\School\\CSE 442\\DKSalariesNBA12-14.csv");// "CSV\\DraftKings\\NFLDKSalaries.csv");
+		System.out.println("1");
+	    HashMap<Player, Boolean> excluded = new HashMap<Player, Boolean>();
+		HashMap<Player, Boolean> included = new HashMap<Player, Boolean>();
+		System.out.println("2");
+		for(Player p: players){
+			included.put(p, false);
+			excluded.put(p, false);
+		}
+		System.out.println("3");
+//		Lineup l = createLineup(players, "NBA", included, excluded);
+		Lineup l = alternativeLineup(players, "NBA");
+		System.out.println("4");
+		l.printLineup();
+		System.out.println("5");
+		System.out.println(l.getScore());
 	}
 
 	public static ArrayList<Player> readCSV(String file) {
@@ -157,11 +162,6 @@ public class Utils {
 			lineup = new NBALineup();
 		}
 		Queue<Player> order = new PriorityQueue<Player>();
-		players.sort(new PlayerComparator());
-		if(lineup.lineupCreated()){
-			lineup.clear();
-		}
-//		boolean first = true;
 		for(Player p: players){
 			if(included.get(p)){
 				System.out.println(lineup.lineupCreated());
@@ -169,15 +169,22 @@ public class Utils {
 				
 			}
 		}
+		players.sort(new PlayerComparator());
+		if(lineup.lineupCreated()){
+			lineup.clear();
+		}
+		boolean first = true;
+		
 		int balance = -1;
 		ArrayList<Player> copy = players;
 		while (!lineup.lineupCreated()) {
 			copy = players;
-//			if (!first) {
-//				Player temp = order.remove();
-//				lineup.removePlayer(temp);
-//				copy.remove(temp);
-//			}
+			if (!first) {
+				Player temp = order.remove();
+				lineup.removePlayer(temp);
+				copy.remove(temp);
+				excluded.put(temp, true);
+			}
 			while (balance < 0) {
 				for (Player p : copy) {
 					if (!excluded.get(p)) {
@@ -194,7 +201,7 @@ public class Utils {
 					}
 				}
 			}
-//			first = false;
+			first = false;
 		}
 		lineup.checkBetter(players, included, excluded);
 		return lineup;
